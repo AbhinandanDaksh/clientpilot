@@ -36,19 +36,20 @@
     --info: #38bdf8;
   }
 }
-/* Dashboard palette follows the warm reference, independent of OS theme. */
+/* Soft sage and cool grey dashboard surfaces, independent of OS theme. */
 .dashboard-shell {
-  --dash-bg: #faf8f5;
-  --dash-sidebar: #f4f0ea;
-  --dash-card: #fffdfa;
+  --dash-bg: #e4e7df;
+  --dash-bg-cool: #dce9eb;
+  --dash-sidebar: #e5e8e1;
+  --dash-card: #f2f4efcc;
   --dash-text: #302d29;
-  --dash-muted: #938c82;
-  --dash-border: #eae2d8;
+  --dash-muted: #6f786e;
+  --dash-border: #d6ddd4;
   --dash-primary: #cb7858;
   --dash-primary-hover: #b66648;
   --dash-white: #ffffff;
-  --dash-hero-start: #fffaf5;
-  --dash-hero-end: #f9eee7;
+  --dash-hero-start: #edf2eb;
+  --dash-hero-end: #e0ecec;
   --dash-peach: #f5dfd4;
   --dash-sage: #e5eddf;
   --dash-green: #96a888;

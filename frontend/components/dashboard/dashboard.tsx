@@ -31,7 +31,7 @@ export default function Dashboard() {
     );
   };
   return (
-    <div className="dashboard-shell flex min-h-screen bg-dash-bg text-[13px] leading-normal text-dash-text [&_button]:cursor-pointer [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-dash-primary [&_button:focus-visible]:outline-offset-4 [&_h2]:m-0 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-[-0.6px] max-[560px]:[&_h2]:text-lg">
+    <div className="dashboard-shell flex min-h-screen bg-dash-bg bg-[radial-gradient(ellipse_at_bottom_left,var(--dash-bg-cool),transparent_65%)] text-[13px] leading-normal text-dash-text [&_button]:cursor-pointer [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-dash-primary [&_button:focus-visible]:outline-offset-4 [&_h2]:m-0 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-[-0.6px] max-[560px]:[&_h2]:text-lg">
       <Sidebar
         active={active}
         onSelect={setActive}
@@ -52,7 +52,7 @@ export default function Dashboard() {
               aria-label="Help"
               onClick={() =>
                 setNotice(
-                  "Welcome to your command center. This preview uses sample data; no messages are sent and no live agents are run.",
+                  "Welcome to ClientPilot. This preview uses sample data; no messages are sent and no live agents are run.",
                 )
               }
             >

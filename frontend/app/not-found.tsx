@@ -4,11 +4,11 @@ import { LuArrowLeft, LuCompass, LuSparkles } from "react-icons/lu";
 export default function NotFound() {
   return (
     <main className="dashboard-shell flex min-h-screen flex-1 flex-col items-center justify-center bg-dash-bg px-6 py-12 text-center text-dash-text">
-      <Link href="/dashboard" aria-label="freelance.ai dashboard" className="mb-12 inline-flex items-center gap-3 rounded-lg text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dash-primary">
+      <Link href="/dashboard" aria-label="ClientPilot dashboard" className="mb-12 inline-flex items-center gap-3 rounded-lg text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dash-primary">
         <span className="grid size-9 place-items-center rounded-xl bg-dash-primary text-dash-white">
           <LuSparkles aria-hidden="true" size={21} />
         </span>
-        <span>freelance<span className="text-dash-primary">.ai</span></span>
+        <span>Client<span className="text-dash-primary">Pilot</span></span>
       </Link>
       <section className="w-full max-w-lg rounded-3xl border border-dash-border bg-dash-card px-6 py-12 sm:px-12">
         <span className="mx-auto mb-6 grid size-14 place-items-center rounded-2xl bg-dash-peach text-dash-primary">

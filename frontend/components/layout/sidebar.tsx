@@ -68,7 +68,7 @@ export default function Sidebar({
           <LuSparkles aria-hidden="true" size={22} />
         </span>
         <strong className="group-data-[collapsed=true]:hidden max-[850px]:hidden">
-          freelance<span>.ai</span>
+          Client<span>Pilot</span>
         </strong>
         <button
           className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand ml-auto bg-dash-border group-data-[collapsed=true]:mx-auto group-data-[collapsed=true]:mt-2 group-data-[collapsed=true]:rotate-180 max-[850px]:hidden"

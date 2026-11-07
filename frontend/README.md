@@ -1,4 +1,4 @@
-# Freelance AI Command Center
+# ClientPilot
 
 Next.js App Router frontend with TypeScript, Tailwind CSS, and react-icons.
 

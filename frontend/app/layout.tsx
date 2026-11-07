@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 export const metadata: Metadata = {
-  title: "Freelance AI Command Center",
+  title: "ClientPilot",
   description: "Your projects, clients, and AI agents in one workspace.",
 };
 export default function RootLayout({ children }: LayoutProps<"/">) {
