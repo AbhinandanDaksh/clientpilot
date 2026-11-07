@@ -1,0 +1,68 @@
+/* Shared app colors. Use these variables instead of repeating hex values. */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --surface: #fafafa;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-foreground: #ffffff;
+  --secondary: #e4e4e7;
+  --secondary-foreground: #18181b;
+  --success: #15803d;
+  --warning: #a16207;
+  --danger: #dc2626;
+  --info: #0369a1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --surface: #18181b;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --border: #3f3f46;
+    --primary: #60a5fa;
+    --primary-hover: #93c5fd;
+    --primary-foreground: #0a0a0a;
+    --secondary: #27272a;
+    --secondary-foreground: #fafafa;
+    --success: #4ade80;
+    --warning: #facc15;
+    --danger: #f87171;
+    --info: #38bdf8;
+  }
+}
+/* Dashboard palette follows the warm reference, independent of OS theme. */
+.dashboard-shell {
+  --dash-bg: #faf8f5;
+  --dash-sidebar: #f4f0ea;
+  --dash-card: #fffdfa;
+  --dash-text: #302d29;
+  --dash-muted: #938c82;
+  --dash-border: #eae2d8;
+  --dash-primary: #cb7858;
+  --dash-primary-hover: #b66648;
+  --dash-white: #ffffff;
+  --dash-hero-start: #fffaf5;
+  --dash-hero-end: #f9eee7;
+  --dash-peach: #f5dfd4;
+  --dash-sage: #e5eddf;
+  --dash-green: #96a888;
+  --dash-lavender: #e9e2f0;
+  --dash-purple: #a491ba;
+  --dash-sand: #f7e8d6;
+  --dash-orange: #d79958;
+  --dash-sky: #dfedf0;
+  --dash-blue: #72a3b1;
+  --dash-gold-bg: #f6edcd;
+  --dash-gold: #be9b3c;
+  --dash-avatar: #e2c4b5;
+  --dash-avatar-text: #7e5543;
+  --dash-shadow: #b8775614;
+  --dash-orbit: #e8b39c;
+  --dash-overlay: #302d294d;
+}
