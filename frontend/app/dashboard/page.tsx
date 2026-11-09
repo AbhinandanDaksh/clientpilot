@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { siteTitle, siteDescription } from "@/common/site";
 import Dashboard from "@/components/dashboard/dashboard";
 export const metadata: Metadata = {
-  title: "ClientPilot",
-  description: "Manage your clients, leads, and AI agents with ClientPilot.",
+  title: { absolute: siteTitle },
+  alternates: { canonical: "/dashboard" },
+  description: siteDescription,
 };
 export default function DashboardPage() {
   return <Dashboard />;

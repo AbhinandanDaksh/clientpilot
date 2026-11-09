@@ -1,4 +1,11 @@
+"use client";
+import { useState,useEffect } from "react";
 export default function Footer() {
+    const [year, setYear] = useState<number | null>(null);
+    useEffect(() => {
+      setYear(new Date().getFullYear());
+    }, []);
+
   return (
     <footer className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-dash-border py-4 text-[11px] leading-5 text-dash-muted max-[560px]:flex-col max-[560px]:items-start">
       <p>
@@ -7,7 +14,7 @@ export default function Footer() {
         Your freelance work, in one place.
       </p>
       <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span>&copy; {new Date().getFullYear()} ClientPilot</span>
+        <span>&copy; {year ?? 2026}ClientPilot</span>
         <span aria-hidden="true" className="h-3 w-px bg-dash-border" />
         {/* <span className="rounded-full border border-dash-border bg-dash-card px-2.5 py-0.5 text-[10px]">Demo workspace</span> */}
       </p>
