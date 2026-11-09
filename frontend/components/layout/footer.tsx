@@ -11,15 +11,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-dash-border py-4 text-[11px] leading-5 text-dash-muted max-[560px]:flex-col max-[560px]:items-start">
-      <p>
+    <footer className="mt-6 flex w-full min-w-0 flex-col items-center gap-3 border-t border-dash-border py-5 text-center text-[11px] leading-5 text-dash-muted sm:flex-row sm:flex-wrap sm:justify-between sm:text-left">
+      <p className="flex min-w-0 flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:justify-start">
         <span className="font-semibold text-dash-text">Client<span className="text-dash-primary">Pilot</span></span>
-        <span className="mx-2" aria-hidden="true">&middot;</span>
-        Your freelance work, in one place.
+        <span className="hidden sm:inline" aria-hidden="true">&middot;</span>
+        <span className="w-full sm:w-auto">Your freelance work, in one place.</span>
       </p>
-      <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <p className="shrink-0">
         <span>&copy; {year !== null ? String(year) + " " : ""}ClientPilot</span>
-        <span aria-hidden="true" className="h-3 w-px bg-dash-border" />
         {/* <span className="rounded-full border border-dash-border bg-dash-card px-2.5 py-0.5 text-[10px]">Demo workspace</span> */}
       </p>
     </footer>

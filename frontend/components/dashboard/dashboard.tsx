@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { workspaceHref } from "@/common/workspace-routes";
+import dynamic from "next/dynamic";
 import Sidebar from "@/components/layout/sidebar";
 import Footer from "@/components/layout/footer";
 import { metrics, agents, leads } from "./data";
@@ -21,6 +22,11 @@ import {
   LuArrowLeft,
 } from "react-icons/lu";
 import Button from "@/components/ui/button";
+const WeeklyActivityChart = dynamic(() => import("./charts").then((module) => module.WeeklyActivityChart), { ssr: false, loading: () => <div className="mt-5 h-[190px]" /> });
+const OutreachTrendChart = dynamic(() => import("./charts").then((module) => module.OutreachTrendChart), { ssr: false, loading: () => <div className="mt-7 h-[340px]" /> });
+
+const PipelineCharts = dynamic(() => import("./charts").then((module) => module.PipelineCharts), { ssr: false, loading: () => <div className="mt-7 h-[360px]" /> });
+
 export default function Dashboard({ active = "Overview" }: { active?: string }) {
   const router = useRouter();
   const setActive = (item: string) => router.push(workspaceHref(item));
@@ -298,6 +304,8 @@ export default function Dashboard({ active = "Overview" }: { active?: string }) 
                   ))}
                 </div>
               </section>
+              <OutreachTrendChart />
+              <PipelineCharts />
               <div className="mt-7 grid grid-cols-[1.65fr_1fr] gap-4 max-[850px]:grid-cols-1">
                 <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
                   <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-xs [&>button]:max-[560px]:whitespace-nowrap">
@@ -353,19 +361,8 @@ export default function Dashboard({ active = "Overview" }: { active?: string }) 
                     <br />
                     Your next chapter is taking shape.
                   </p>
-                  <div
-                    className="mt-6 flex h-[130px] items-end gap-3 [&>div]:flex [&>div]:h-full [&>div]:flex-1 [&>div]:flex-col [&>div]:items-center [&>div]:justify-end [&>div]:gap-[7px] [&_span]:block [&_span]:w-full [&_span]:max-w-8 [&_span]:rounded-t-[5px] [&_span]:bg-dash-peach [&>div:last-child_span]:bg-dash-primary [&_small]:text-[9px] [&_small]:text-dash-muted"
-                    aria-label="Illustrative weekly activity"
-                  >
-                    {[34, 52, 42, 68, 58, 84, 96].map((height, index) => (
-                      <div key={index}>
-                        <span style={{ height: `${height}%` }} />
-                        <small>
-                          {["M", "T", "W", "T", "F", "S", "S"][index]}
-                        </small>
-                      </div>
-                    ))}
-                  </div>
+                  <WeeklyActivityChart />
+                  <p className="mt-2 text-[10px] text-dash-muted">Weekly actions ? Sample data</p>
                 </section>
               </div>
             </>
