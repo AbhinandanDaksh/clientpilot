@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { workspaceHref } from "@/common/workspace-routes";
 import dynamic from "next/dynamic";
 import Sidebar from "@/components/layout/sidebar";
+import { ChartSkeleton } from "./loading-skeleton";
 import Footer from "@/components/layout/footer";
 import { metrics, agents, leads } from "./data";
 import {
@@ -22,10 +23,10 @@ import {
   LuArrowLeft,
 } from "react-icons/lu";
 import Button from "@/components/ui/button";
-const WeeklyActivityChart = dynamic(() => import("./charts").then((module) => module.WeeklyActivityChart), { ssr: false, loading: () => <div className="mt-5 h-[190px]" /> });
-const OutreachTrendChart = dynamic(() => import("./charts").then((module) => module.OutreachTrendChart), { ssr: false, loading: () => <div className="mt-7 h-[340px]" /> });
+const WeeklyActivityChart = dynamic(() => import("./charts").then((module) => module.WeeklyActivityChart), { ssr: false, loading: () => <ChartSkeleton variant="weekly" /> });
+const OutreachTrendChart = dynamic(() => import("./charts").then((module) => module.OutreachTrendChart), { ssr: false, loading: () => <ChartSkeleton /> });
 
-const PipelineCharts = dynamic(() => import("./charts").then((module) => module.PipelineCharts), { ssr: false, loading: () => <div className="mt-7 h-[360px]" /> });
+const PipelineCharts = dynamic(() => import("./charts").then((module) => module.PipelineCharts), { ssr: false, loading: () => <ChartSkeleton variant="pipeline" /> });
 
 export default function Dashboard({ active = "Overview" }: { active?: string }) {
   const router = useRouter();
