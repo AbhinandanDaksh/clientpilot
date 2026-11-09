@@ -1,9 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Sidebar from "@/components/layout/sidebar";
 import Footer from "@/components/layout/footer";
 import { metrics, agents, leads } from "./data";
 import {
+  LuMenu,
+  LuX,
   LuSparkles,
   LuCompass,
   LuPencilLine,
@@ -18,6 +20,8 @@ import {
 } from "react-icons/lu";
 import Button from "@/components/ui/button";
 export default function Dashboard() {
+  const mobileMenu = useRef<HTMLDialogElement>(null);
+  const menuTrigger = useRef<HTMLButtonElement>(null);
   const [active, setActive] = useState("Overview");
   const [collapsed, setCollapsed] = useState(false);
   const [notice, setNotice] = useState("");
@@ -32,6 +36,40 @@ export default function Dashboard() {
   };
   return (
     <div className="dashboard-shell flex min-h-screen bg-dash-bg bg-[radial-gradient(ellipse_at_bottom_left,var(--dash-bg-cool),transparent_65%)] text-[13px] leading-normal text-dash-text [&_button]:cursor-pointer [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-dash-primary [&_button:focus-visible]:outline-offset-4 [&_h2]:m-0 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-[-0.6px] max-[560px]:[&_h2]:text-lg">
+      <dialog
+        ref={mobileMenu}
+        aria-label="Workspace menu"
+        className="fixed inset-y-0 left-0 m-0 h-dvh max-h-none max-w-none border-0 bg-dash-sidebar p-0 text-dash-text backdrop:bg-black/40 min-[851px]:hidden"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) mobileMenu.current?.close();
+        }}
+        onClose={() => {
+          document.body.style.overflow = "";
+          menuTrigger.current?.focus();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") mobileMenu.current?.close();
+        }}
+      >
+        <button
+          autoFocus
+          aria-label="Close menu"
+          className="absolute top-5 right-4 z-10 grid size-9 place-items-center rounded-lg bg-dash-sidebar hover:bg-dash-sand"
+          onClick={() => mobileMenu.current?.close()}
+        >
+          <LuX aria-hidden="true" size={20} />
+        </button>
+        <Sidebar
+          mobile
+          active={active}
+          onSelect={(item) => {
+            setActive(item);
+            mobileMenu.current?.close();
+          }}
+          collapsed={false}
+          onToggle={() => mobileMenu.current?.close()}
+        />
+      </dialog>
       <Sidebar
         active={active}
         onSelect={setActive}
@@ -40,11 +78,25 @@ export default function Dashboard() {
       />
       <div className="min-w-0 flex-1">
         <header className="flex h-[73px] items-center justify-between border-b border-dash-border px-[3.1%] [&_p]:mb-[3px] [&_p]:text-[11px] [&_p]:text-dash-muted [&_p_span]:text-dash-text [&_strong]:text-sm max-[850px]:px-6 max-[560px]:px-4">
-          <div>
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              ref={menuTrigger}
+              aria-label="Open workspace menu"
+              aria-haspopup="dialog"
+              className="hidden size-10 shrink-0 items-center justify-center rounded-lg text-dash-muted hover:bg-dash-sand max-[850px]:inline-flex"
+              onClick={() => {
+                mobileMenu.current?.showModal();
+                document.body.style.overflow = "hidden";
+              }}
+            >
+              <LuMenu aria-hidden="true" size={22} />
+            </button>
+            <div>
             <p>
               Workspace / <span>{active}</span>
             </p>
             <strong>{active}</strong>
+            </div>
           </div>
           <div className="flex items-center gap-3.5 max-[560px]:gap-[5px]">
             <button

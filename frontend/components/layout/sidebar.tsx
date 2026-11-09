@@ -48,12 +48,14 @@ const navigation: {
   },
 ];
 type SidebarProps = {
+  mobile?: boolean;
   active: string;
   onSelect: (item: string) => void;
   collapsed: boolean;
   onToggle: () => void;
 };
 export default function Sidebar({
+  mobile = false,
   active,
   onSelect,
   collapsed,
@@ -61,10 +63,11 @@ export default function Sidebar({
 }: SidebarProps) {
   return (
     <aside
+      data-mobile={mobile}
       data-collapsed={collapsed}
-      className="group sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col border-r border-dash-border bg-dash-sidebar px-[17px] py-[18px] transition-[width] duration-200 data-[collapsed=true]:w-[78px] data-[collapsed=true]:px-3 max-[1250px]:w-[215px] max-[1250px]:px-3 max-[850px]:w-[76px] max-[850px]:px-2.5 max-[560px]:w-[60px] max-[560px]:px-[5px]"
+      className={`group sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col overflow-hidden border-r border-dash-border bg-dash-sidebar px-[17px] py-[18px] transition-[width] duration-200 data-[collapsed=true]:w-[78px] data-[collapsed=true]:px-3 max-[1250px]:w-[215px] max-[1250px]:px-3 ${mobile ? "w-[min(300px,85vw)] max-[1250px]:w-[min(300px,85vw)]" : "max-[850px]:hidden"}`}
     >
-      <div className="flex h-[42px] items-center gap-3 px-2 group-data-[collapsed=true]:h-auto group-data-[collapsed=true]:flex-wrap group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-0 max-[850px]:h-auto max-[850px]:flex-wrap max-[850px]:justify-center max-[850px]:p-0 [&_strong]:text-[15px] [&_strong]:tracking-[-0.6px] [&_strong_span]:text-dash-primary">
+      <div className="flex h-[42px] shrink-0 items-center gap-3 px-2 group-data-[collapsed=true]:h-auto group-data-[collapsed=true]:flex-wrap group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-0 group-data-[mobile=false]:max-[850px]:h-auto group-data-[mobile=false]:max-[850px]:flex-wrap group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-0 [&_strong]:text-[15px] [&_strong]:tracking-[-0.6px] [&_strong_span]:text-dash-primary">
         <Image
           src="/branding/clientpilot-icon.svg"
           alt="ClientPilot"
@@ -73,11 +76,11 @@ export default function Sidebar({
           className="size-8 shrink-0 max-[560px]:size-[30px]"
           priority
         />
-        <strong className="group-data-[collapsed=true]:hidden max-[850px]:hidden">
+        <strong className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
           Client<span>Pilot</span>
         </strong>
         <button
-          className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand ml-auto bg-dash-border group-data-[collapsed=true]:mx-auto group-data-[collapsed=true]:mt-2 group-data-[collapsed=true]:rotate-180 max-[850px]:hidden"
+          className="group-data-[mobile=true]:hidden inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand ml-auto bg-dash-border group-data-[collapsed=true]:mx-auto group-data-[collapsed=true]:mt-2 group-data-[collapsed=true]:rotate-180 group-data-[mobile=false]:max-[850px]:hidden"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-expanded={!collapsed}
           onClick={onToggle}
@@ -85,26 +88,26 @@ export default function Sidebar({
           <LuChevronLeft aria-hidden="true" size={18} />
         </button>
       </div>
-      <nav aria-label="Workspace navigation">
+      <nav aria-label="Workspace navigation" className="mt-5 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain pr-1 [scrollbar-width:thin] [scrollbar-color:var(--dash-border)_transparent]">
         {navigation.map(({ heading, items }) => (
-          <div className="mt-8 [&>p]:mb-3 [&>p]:pl-3" key={heading}>
-            <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted group-data-[collapsed=true]:hidden max-[850px]:hidden">
+          <div className="mb-5 last:mb-0 [&>p]:mb-2 [&>p]:pl-3" key={heading}>
+            <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
               {heading}
             </p>
             {items.map(({ icon: ItemIcon, label, badge }) => (
               <button
                 key={label}
                 title={label}
-                className={`my-[3px] flex w-full items-center gap-3 rounded-xl border-0 px-3 py-[11px] text-left text-xs whitespace-nowrap hover:bg-dash-card group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-3 max-[850px]:justify-center max-[850px]:p-3 max-[560px]:[&_svg]:w-[17px] ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
+                className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-xs leading-5 whitespace-nowrap transition-colors hover:bg-dash-card group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
                 aria-current={active === label ? "page" : undefined}
                 onClick={() => onSelect(label)}
               >
-                <ItemIcon aria-hidden="true" size={18} />
-                <span className="group-data-[collapsed=true]:hidden max-[850px]:hidden">
+                <ItemIcon aria-hidden="true" size={18} className="size-[18px] shrink-0" />
+                <span className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
                   {label}
                 </span>
                 {badge && (
-                  <span className="ml-auto rounded-[20px] bg-dash-peach px-1.5 py-px text-[10px] text-dash-primary group-data-[collapsed=true]:hidden max-[850px]:hidden">
+                  <span className="ml-auto rounded-[20px] bg-dash-peach px-1.5 py-px text-[10px] text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
                     {badge}
                   </span>
                 )}
@@ -113,8 +116,8 @@ export default function Sidebar({
           </div>
         ))}
       </nav>
-      <div className="mt-auto pt-8">
-        <div className="rounded-[17px] border border-dash-border bg-dash-bg p-4 [&_h3]:mb-[3px] [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mb-3 [&_p]:text-xs [&_p]:text-dash-muted [&_button]:inline-flex [&_button]:items-center [&_button]:gap-[5px] [&_button]:text-sm [&_button]:text-dash-primary group-data-[collapsed=true]:hidden max-[850px]:hidden">
+      <div className="shrink-0 border-t border-dash-border pt-3 mt-3">
+        <div className="rounded-[17px] border border-dash-border bg-dash-bg p-4 [@media(max-height:760px)]:hidden [&_h3]:mb-[3px] [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mb-3 [&_p]:text-xs [&_p]:text-dash-muted [&_button]:inline-flex [&_button]:items-center [&_button]:gap-[5px] [&_button]:text-sm [&_button]:text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
           <span className="mb-3 grid size-8 place-items-center rounded-full bg-dash-peach text-dash-primary">
             <LuSparkles aria-hidden="true" size={18} />
           </span>
@@ -125,18 +128,18 @@ export default function Sidebar({
           </button>
         </div>
         <button
-          className="flex w-full items-center gap-3 border-0 bg-transparent px-2 pt-6 pb-1 text-left group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 max-[850px]:justify-center max-[850px]:px-0 [&_strong]:block [&_strong]:text-xs [&_small]:block [&_small]:text-[10px] [&_small]:text-dash-muted"
+          className="flex w-full items-center gap-3 border-0 bg-transparent px-2 pt-3 pb-1 text-left group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:px-0 [&_strong]:block [&_strong]:text-xs [&_small]:block [&_small]:text-[10px] [&_small]:text-dash-muted"
           title="Account settings"
           onClick={() => onSelect("Settings")}
         >
           <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[11px] font-bold text-dash-avatar-text">
             AK
           </span>
-          <span className="group-data-[collapsed=true]:hidden max-[850px]:hidden">
+          <span className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
             <strong>Aarav Kapoor</strong>
             <small>Independent studio</small>
           </span>
-          <span className="group-data-[collapsed=true]:hidden max-[850px]:hidden ml-auto text-dash-muted">
+          <span className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden ml-auto text-dash-muted">
             <LuEllipsis aria-hidden="true" size={18} />
           </span>
         </button>
