@@ -13,6 +13,13 @@ const geistMono = Geist_Mono({
 });
 export const metadata: Metadata = {
   title: "ClientPilot",
+  icons: {
+    icon: [
+      { url: "/branding/clientpilot-icon.svg", type: "image/svg+xml" },
+      { url: "/branding/clientpilot-icon_512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/branding/clientpilot-icon_512.png",
+  },
   description: "Your projects, clients, and AI agents in one workspace.",
 };
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import type { IconType } from "react-icons";
 import {
   LuSparkles,
@@ -64,9 +65,14 @@ export default function Sidebar({
       className="group sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col border-r border-dash-border bg-dash-sidebar px-[17px] py-[18px] transition-[width] duration-200 data-[collapsed=true]:w-[78px] data-[collapsed=true]:px-3 max-[1250px]:w-[215px] max-[1250px]:px-3 max-[850px]:w-[76px] max-[850px]:px-2.5 max-[560px]:w-[60px] max-[560px]:px-[5px]"
     >
       <div className="flex h-[42px] items-center gap-3 px-2 group-data-[collapsed=true]:h-auto group-data-[collapsed=true]:flex-wrap group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-0 max-[850px]:h-auto max-[850px]:flex-wrap max-[850px]:justify-center max-[850px]:p-0 [&_strong]:text-[15px] [&_strong]:tracking-[-0.6px] [&_strong_span]:text-dash-primary">
-        <span className="grid size-8 shrink-0 place-items-center rounded-[11px] bg-dash-primary text-dash-white shadow-[0_5px_12px_var(--dash-shadow)] max-[560px]:size-[30px]">
-          <LuSparkles aria-hidden="true" size={22} />
-        </span>
+        <Image
+          src="/branding/clientpilot-icon.svg"
+          alt="ClientPilot"
+          width={32}
+          height={32}
+          className="size-8 shrink-0 max-[560px]:size-[30px]"
+          priority
+        />
         <strong className="group-data-[collapsed=true]:hidden max-[850px]:hidden">
           Client<span>Pilot</span>
         </strong>
