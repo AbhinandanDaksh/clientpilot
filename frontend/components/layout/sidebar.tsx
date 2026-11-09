@@ -65,7 +65,7 @@ export default function Sidebar({
     <aside
       data-mobile={mobile}
       data-collapsed={collapsed}
-      className={`group sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col overflow-hidden border-r border-dash-border bg-dash-sidebar px-[17px] py-[18px] transition-[width] duration-200 data-[collapsed=true]:w-[78px] data-[collapsed=true]:px-3 max-[1250px]:w-[215px] max-[1250px]:px-3 ${mobile ? "w-[min(300px,85vw)] max-[1250px]:w-[min(300px,85vw)]" : "max-[850px]:hidden"}`}
+      className={`group sticky top-0 flex h-dvh w-[244px] shrink-0 flex-col overflow-hidden border-r border-dash-border bg-dash-sidebar px-[17px] py-[18px] transition-[width,padding] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none data-[collapsed=true]:w-[78px] data-[collapsed=true]:px-3 max-[1250px]:w-[215px] max-[1250px]:px-3 ${mobile ? "w-[min(300px,85vw)] max-[1250px]:w-[min(300px,85vw)]" : "max-[850px]:hidden"}`}
     >
       <div className="flex h-[42px] shrink-0 items-center gap-3 px-2 group-data-[collapsed=true]:h-auto group-data-[collapsed=true]:flex-wrap group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-0 group-data-[mobile=false]:max-[850px]:h-auto group-data-[mobile=false]:max-[850px]:flex-wrap group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-0 [&_strong]:text-[15px] [&_strong]:tracking-[-0.6px] [&_strong_span]:text-dash-primary">
         <Image
@@ -80,7 +80,7 @@ export default function Sidebar({
           Client<span>Pilot</span>
         </strong>
         <button
-          className="group-data-[mobile=true]:hidden inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand ml-auto bg-dash-border group-data-[collapsed=true]:mx-auto group-data-[collapsed=true]:mt-2 group-data-[collapsed=true]:rotate-180 group-data-[mobile=false]:max-[850px]:hidden"
+          className="group-data-[mobile=true]:hidden inline-flex size-7 shrink-0 items-center justify-center transition-transform duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand ml-auto bg-dash-border group-data-[collapsed=true]:mx-auto group-data-[collapsed=true]:mt-2 group-data-[collapsed=true]:rotate-180 group-data-[mobile=false]:max-[850px]:hidden"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-expanded={!collapsed}
           onClick={onToggle}
@@ -98,7 +98,7 @@ export default function Sidebar({
               <button
                 key={label}
                 title={label}
-                className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-xs leading-5 whitespace-nowrap transition-colors hover:bg-dash-card group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
+                className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-xs leading-5 whitespace-nowrap transition-[background-color,color,padding,gap] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none hover:bg-dash-card group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
                 aria-current={active === label ? "page" : undefined}
                 onClick={() => onSelect(label)}
               >

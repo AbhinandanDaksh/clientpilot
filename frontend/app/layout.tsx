@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
+import "aos/dist/aos.css";
 import "./globals.css";
 import NetworkStatus from "@/components/layout/network-status";
 const outfit = Outfit({

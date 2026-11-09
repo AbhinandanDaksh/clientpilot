@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/layout/sidebar";
 import Footer from "@/components/layout/footer";
 import { metrics, agents, leads } from "./data";
@@ -20,6 +20,20 @@ import {
 } from "react-icons/lu";
 import Button from "@/components/ui/button";
 export default function Dashboard() {
+  useEffect(() => {
+    let cancelled = false;
+    void import("aos").then(({ default: AOS }) => {
+      if (cancelled) return;
+      AOS.init({
+        duration: 550,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 40,
+        disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      });
+    });
+    return () => { cancelled = true; };
+  }, []);
   const mobileMenu = useRef<HTMLDialogElement>(null);
   const menuTrigger = useRef<HTMLButtonElement>(null);
   const [active, setActive] = useState("Overview");
@@ -138,7 +152,7 @@ export default function Dashboard() {
         <main className="mx-auto max-w-[1432px] px-12 pt-10 pb-[18px] max-[1250px]:p-[30px] max-[850px]:p-6 max-[560px]:px-3.5 max-[560px]:py-5">
           {active === "Overview" ? (
             <>
-              <section className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
+              <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
                 <div className="relative z-1">
                   <p className="mb-[18px] flex items-center gap-2.5 text-[9px] font-semibold tracking-[1px] text-dash-primary max-[560px]:text-[8px]">
                     <span className="inline-block size-1.5 shrink-0 rounded-full bg-dash-green shadow-[0_0_0_4px_var(--dash-sage)]" />
@@ -190,7 +204,7 @@ export default function Dashboard() {
                   </span>
                 </div>
               </section>
-              <section
+              <section data-aos="fade-up"
                 className="my-7 grid grid-cols-6 gap-3 max-[1250px]:grid-cols-3 max-[560px]:mt-[18px] max-[560px]:mb-6 max-[560px]:grid-cols-2 max-[560px]:gap-2"
                 aria-label="Business overview"
               >
@@ -212,7 +226,7 @@ export default function Dashboard() {
                   </article>
                 ))}
               </section>
-              <section>
+              <section data-aos="fade-up">
                 <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-xs [&>button]:max-[560px]:whitespace-nowrap">
                   <div>
                     <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
@@ -277,7 +291,7 @@ export default function Dashboard() {
                 </div>
               </section>
               <div className="mt-7 grid grid-cols-[1.65fr_1fr] gap-4 max-[850px]:grid-cols-1">
-                <section className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
+                <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
                   <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-xs [&>button]:max-[560px]:whitespace-nowrap">
                     <div>
                       <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
@@ -321,7 +335,7 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </section>
-                <section className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
+                <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
                   <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
                     A LITTLE MOMENTUM
                   </p>
@@ -348,7 +362,7 @@ export default function Dashboard() {
               </div>
             </>
           ) : (
-            <section className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px] min-h-[400px] [&>p:first-of-type]:mt-[30px] [&_h1]:text-[32px] [&_h1]:font-semibold [&>p:not(:first-of-type)]:my-4 [&>p:not(:first-of-type)]:text-dash-muted [&_button[data-variant]]:ml-auto [&>div]:max-[560px]:flex-wrap">
+            <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px] min-h-[400px] [&>p:first-of-type]:mt-[30px] [&_h1]:text-[32px] [&_h1]:font-semibold [&>p:not(:first-of-type)]:my-4 [&>p:not(:first-of-type)]:text-dash-muted [&_button[data-variant]]:ml-auto [&>div]:max-[560px]:flex-wrap">
               <button
                 className="inline-flex items-center gap-[5px] border-0 bg-transparent p-0 text-sm text-dash-primary"
                 onClick={() => setActive("Overview")}
@@ -452,7 +466,7 @@ export default function Dashboard() {
           className="fixed inset-0 z-30 grid place-items-center bg-dash-overlay p-6"
           onClick={() => setNotice("")}
         >
-          <section
+          <section data-aos="fade-up"
             className="w-full max-w-[440px] rounded-[20px] border border-dash-border bg-dash-card p-[30px] shadow-[0_20px_80px_var(--dash-shadow)] [&_h2]:mt-[18px] [&_p]:mt-3 [&_p]:mb-6 [&_p]:leading-[1.8] [&_p]:text-dash-muted"
             role="dialog"
             aria-modal="true"
