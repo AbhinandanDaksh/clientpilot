@@ -149,7 +149,7 @@ export default function Dashboard() {
             </button>
           </div>
         </header>
-        <main className="mx-auto max-w-[1432px] px-12 pt-10 pb-[18px] max-[1250px]:p-[30px] max-[850px]:p-6 max-[560px]:px-3.5 max-[560px]:py-5">
+        <main className="w-full min-w-0 max-w-none px-8 pt-6 pb-[18px] max-[1250px]:px-6 max-[850px]:p-5 max-[560px]:px-3.5 max-[560px]:py-4">
           {active === "Overview" ? (
             <>
               <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
@@ -362,7 +362,7 @@ export default function Dashboard() {
               </div>
             </>
           ) : (
-            <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px] min-h-[400px] [&>p:first-of-type]:mt-[30px] [&_h1]:text-[32px] [&_h1]:font-semibold [&>p:not(:first-of-type)]:my-4 [&>p:not(:first-of-type)]:text-dash-muted [&_button[data-variant]]:ml-auto [&>div]:max-[560px]:flex-wrap">
+            <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px] min-h-[400px] w-full break-words [&>p:first-of-type]:mt-[30px] [&_h1]:text-[32px] [&_h1]:font-semibold [&>p:not(:first-of-type)]:my-4 [&>p:not(:first-of-type)]:text-dash-muted [&_button[data-variant]]:ml-auto [&>div]:max-[560px]:flex-wrap">
               <button
                 className="inline-flex items-center gap-[5px] border-0 bg-transparent p-0 text-sm text-dash-primary"
                 onClick={() => setActive("Overview")}
