@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { workspaceHref } from "@/common/workspace-routes";
 import Sidebar from "@/components/layout/sidebar";
 import Footer from "@/components/layout/footer";
 import { metrics, agents, leads } from "./data";
@@ -19,7 +21,9 @@ import {
   LuArrowLeft,
 } from "react-icons/lu";
 import Button from "@/components/ui/button";
-export default function Dashboard() {
+export default function Dashboard({ active = "Overview" }: { active?: string }) {
+  const router = useRouter();
+  const setActive = (item: string) => router.push(workspaceHref(item));
   useEffect(() => {
     let cancelled = false;
     void import("aos").then(({ default: AOS }) => {
@@ -36,7 +40,6 @@ export default function Dashboard() {
   }, []);
   const mobileMenu = useRef<HTMLDialogElement>(null);
   const menuTrigger = useRef<HTMLButtonElement>(null);
-  const [active, setActive] = useState("Overview");
   const [collapsed, setCollapsed] = useState(false);
   const [notice, setNotice] = useState("");
   const [ran, setRan] = useState<string[]>([]);
@@ -75,10 +78,15 @@ export default function Dashboard() {
         </button>
         <Sidebar
           mobile
+          onNavigate={() => {
+            mobileMenu.current?.close();
+            document.body.style.overflow = "";
+          }}
           active={active}
           onSelect={(item) => {
-            setActive(item);
             mobileMenu.current?.close();
+            document.body.style.overflow = "";
+            setActive(item);
           }}
           collapsed={false}
           onToggle={() => mobileMenu.current?.close()}

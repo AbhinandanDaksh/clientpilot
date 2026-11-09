@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import { workspaceHref } from "@/common/workspace-routes";
 import Image from "next/image";
 import type { IconType } from "react-icons";
 import {
@@ -49,6 +51,7 @@ const navigation: {
 ];
 type SidebarProps = {
   mobile?: boolean;
+  onNavigate?: () => void;
   active: string;
   onSelect: (item: string) => void;
   collapsed: boolean;
@@ -56,6 +59,7 @@ type SidebarProps = {
 };
 export default function Sidebar({
   mobile = false,
+  onNavigate,
   active,
   onSelect,
   collapsed,
@@ -95,12 +99,13 @@ export default function Sidebar({
               {heading}
             </p>
             {items.map(({ icon: ItemIcon, label, badge }) => (
-              <button
+              <Link
                 key={label}
+                href={workspaceHref(label)}
                 title={label}
                 className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-xs leading-5 whitespace-nowrap transition-[background-color,color,padding,gap] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none hover:bg-dash-card group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
                 aria-current={active === label ? "page" : undefined}
-                onClick={() => onSelect(label)}
+                onClick={onNavigate}
               >
                 <ItemIcon aria-hidden="true" size={18} className="size-[18px] shrink-0" />
                 <span className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
@@ -111,7 +116,7 @@ export default function Sidebar({
                     {badge}
                   </span>
                 )}
-              </button>
+              </Link>
             ))}
           </div>
         ))}
