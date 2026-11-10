@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import WorkspacePlaceholder from "@/components/layout/workspace-placeholder";
+import WebsiteAuditor from "./website-auditor";
 
 export const metadata: Metadata = {
   title: "Website Auditor",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <WorkspacePlaceholder title="Website Auditor" />;
+  return <WebsiteAuditor />;
 }
