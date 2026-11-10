@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import WorkspacePlaceholder from "@/components/layout/workspace-placeholder";
+import { connection } from "next/server";
+import FollowUpCalendar from "./follow-up-calendar";
 
 export const metadata: Metadata = {
   title: "Follow-up Calendar",
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/follow-up-calendar" },
 };
 
-export default function Page() {
-  return <WorkspacePlaceholder title="Follow-up Calendar" />;
+export default async function Page() {
+  await connection();
+  return <FollowUpCalendar today={new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date())} />;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import WorkspacePlaceholder from "@/components/layout/workspace-placeholder";
+import DealRoom from "./deal-room";
 
 export const metadata: Metadata = {
   title: "Deal Room",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <WorkspacePlaceholder title="Deal Room" />;
+  return <DealRoom />;
 }

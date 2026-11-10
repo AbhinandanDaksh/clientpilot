@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import WorkspacePlaceholder from "@/components/layout/workspace-placeholder";
+import Conversations from "./conversations";
 
 export const metadata: Metadata = {
   title: "Conversations",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <WorkspacePlaceholder title="Conversations" />;
+  return <Conversations />;
 }
