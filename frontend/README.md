@@ -16,10 +16,13 @@ The home route redirects to `/dashboard`. Authentication pages live under `/auth
 ```text
 app/                     Route pages, layouts, and global styles
   auth/                  Login, register, and password recovery pages
-  dashboard/             Dashboard route
+  (workspace)/           Shared workspace layout; URLs stay unchanged
+    dashboard/           Overview page and private _components/ (charts, data)
+    lead-hunter/         Lead Hunter page and its local component
+    ai-writer/           AI Writer page and its local component
+    agent-activity/      Agent Activity page and its local component
 components/
-  dashboard/             Dashboard UI and demo data
-  layout/                Shared sidebar and footer
+  layout/                Shared workspace shell, sidebar, footer and loading UI
   ui/                    Reusable UI primitives
 common/colors.css        Shared application and dashboard color tokens
 utils/                   Reserved for shared utilities when needed

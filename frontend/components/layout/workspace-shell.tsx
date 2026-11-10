@@ -1,0 +1,202 @@
+"use client";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { workspaceRoutes, workspaceHref } from "@/common/workspace-routes";
+import Sidebar from "@/components/layout/sidebar";
+import Footer from "@/components/layout/footer";
+import {
+  LuMenu,
+  LuX,
+  LuSparkles,
+  LuBell,
+  LuCircleHelp,
+  LuChevronDown,
+} from "react-icons/lu";
+import Button from "@/components/ui/button";
+type WorkspaceActions = {
+  setActive: (item: string) => void;
+  setNotice: (message: string) => void;
+  run: (name: string) => void;
+  ran: string[];
+};
+const WorkspaceContext = createContext<WorkspaceActions | null>(null);
+export function useWorkspace() {
+  const value = useContext(WorkspaceContext);
+  if (!value) throw new Error("Workspace components require WorkspaceShell");
+  return value;
+}
+
+export default function WorkspaceShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const active = workspaceRoutes.find((route) => route.href === pathname)?.label ?? "Overview";
+  const router = useRouter();
+  const setActive = (item: string) => router.push(workspaceHref(item));
+  useEffect(() => {
+    let cancelled = false;
+    void import("aos").then(({ default: AOS }) => {
+      if (cancelled) return;
+      AOS.init({
+        duration: 550,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 40,
+        disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      });
+    });
+    return () => { cancelled = true; };
+  }, [pathname]);
+  const mobileMenu = useRef<HTMLDialogElement>(null);
+  const menuTrigger = useRef<HTMLButtonElement>(null);
+  const [collapsed, setCollapsed] = useState(false);
+  const [notice, setNotice] = useState("");
+  const [ran, setRan] = useState<string[]>([]);
+  const run = (name: string) => {
+    setRan((previous) =>
+      previous.includes(name) ? previous : [...previous, name],
+    );
+    setNotice(
+      `${name}: demo run complete. Connect your agent backend to discover live results.`,
+    );
+  };
+  return (
+    <WorkspaceContext.Provider value={{ setActive, setNotice, run, ran }}>
+    <div className="dashboard-shell flex min-h-screen bg-dash-bg bg-[radial-gradient(ellipse_at_bottom_left,var(--dash-bg-cool),transparent_65%)] text-[13px] leading-normal text-dash-text [&_button]:cursor-pointer [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-dash-primary [&_button:focus-visible]:outline-offset-4 [&_h2]:m-0 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:tracking-[-0.6px] max-[560px]:[&_h2]:text-lg">
+      <dialog
+        ref={mobileMenu}
+        aria-label="Workspace menu"
+        className="fixed inset-y-0 left-0 m-0 h-dvh max-h-none max-w-none border-0 bg-dash-sidebar p-0 text-dash-text backdrop:bg-black/40 min-[851px]:hidden"
+        onClick={(event) => {
+          if (event.target === event.currentTarget) mobileMenu.current?.close();
+        }}
+        onClose={() => {
+          document.body.style.overflow = "";
+          menuTrigger.current?.focus();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") mobileMenu.current?.close();
+        }}
+      >
+        <button
+          autoFocus
+          aria-label="Close menu"
+          className="absolute top-5 right-4 z-10 grid size-9 place-items-center rounded-lg bg-dash-sidebar hover:bg-dash-sand"
+          onClick={() => mobileMenu.current?.close()}
+        >
+          <LuX aria-hidden="true" size={20} />
+        </button>
+        <Sidebar
+          mobile
+          onNavigate={() => {
+            mobileMenu.current?.close();
+            document.body.style.overflow = "";
+          }}
+          active={active}
+          onSelect={(item) => {
+            mobileMenu.current?.close();
+            document.body.style.overflow = "";
+            setActive(item);
+          }}
+          collapsed={false}
+          onToggle={() => mobileMenu.current?.close()}
+        />
+      </dialog>
+      <Sidebar
+        active={active}
+        onSelect={setActive}
+        collapsed={collapsed}
+        onToggle={() => setCollapsed(!collapsed)}
+      />
+      <div className="min-w-0 flex-1">
+        <header className="flex h-[73px] items-center justify-between border-b border-dash-border px-[3.1%] [&_p]:mb-[3px] [&_p]:text-[11px] [&_p]:text-dash-muted [&_p_span]:text-dash-text [&_strong]:text-sm max-[850px]:px-6 max-[560px]:px-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              ref={menuTrigger}
+              aria-label="Open workspace menu"
+              aria-haspopup="dialog"
+              className="hidden size-10 shrink-0 items-center justify-center rounded-lg text-dash-muted hover:bg-dash-sand max-[850px]:inline-flex"
+              onClick={() => {
+                mobileMenu.current?.showModal();
+                document.body.style.overflow = "hidden";
+              }}
+            >
+              <LuMenu aria-hidden="true" size={22} />
+            </button>
+            <div>
+            <p>
+              Workspace / <span>{active}</span>
+            </p>
+            <strong>{active}</strong>
+            </div>
+          </div>
+          <div className="flex items-center gap-3.5 max-[560px]:gap-[5px]">
+            <button
+              className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand"
+              aria-label="Help"
+              onClick={() =>
+                setNotice(
+                  "Welcome to ClientPilot. This preview uses sample data; no messages are sent and no live agents are run.",
+                )
+              }
+            >
+              <LuCircleHelp aria-hidden="true" size={18} />
+            </button>
+            <button
+              className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand relative [&_i]:absolute [&_i]:top-1 [&_i]:right-[5px] [&_i]:size-[5px] [&_i]:rounded-full [&_i]:bg-dash-primary"
+              aria-label="Notifications"
+              onClick={() =>
+                setNotice(
+                  "You have 6 drafts ready to review and 2 new client replies. These are demo notifications.",
+                )
+              }
+            >
+              <LuBell aria-hidden="true" size={18} />
+              <i />
+            </button>
+            <span className="h-6 w-px bg-dash-border" />
+            <button
+              className="flex items-center gap-3 border-0 bg-transparent text-dash-muted"
+              aria-label="Open account settings"
+              onClick={() => setActive("Settings")}
+            >
+              <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[11px] font-bold text-dash-avatar-text">
+                AK
+              </span>
+              <LuChevronDown aria-hidden="true" size={14} />
+            </button>
+          </div>
+        </header>
+        <main className="w-full min-w-0 max-w-none px-8 pt-6 pb-[18px] max-[1250px]:px-6 max-[850px]:p-5 max-[560px]:px-3.5 max-[560px]:py-4">
+          {children}
+          <Footer />
+        </main>
+      </div>
+      {notice && (
+        <div
+          className="fixed inset-0 z-30 grid place-items-center bg-dash-overlay p-6"
+          onClick={() => setNotice("")}
+        >
+          <section data-aos="fade-up"
+            className="w-full max-w-[440px] rounded-[20px] border border-dash-border bg-dash-card p-[30px] shadow-[0_20px_80px_var(--dash-shadow)] [&_h2]:mt-[18px] [&_p]:mt-3 [&_p]:mb-6 [&_p]:leading-[1.8] [&_p]:text-dash-muted"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Workspace update"
+            onClick={(event) => event.stopPropagation()}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") setNotice("");
+            }}
+          >
+            <span className="inline-flex size-[33px] shrink-0 items-center justify-center rounded-[10px] bg-dash-peach text-dash-primary">
+              <LuSparkles aria-hidden="true" size={18} />
+            </span>
+            <h2>Workspace update</h2>
+            <p>{notice}</p>
+            <Button autoFocus onClick={() => setNotice("")}>
+              Got it
+            </Button>
+          </section>
+        </div>
+      )}
+    </div>
+    </WorkspaceContext.Provider>
+  );
+}
