@@ -46,4 +46,11 @@ export const demoClients: Client[] = [
     caution: "Agree on content, scope and approvals before promising a delivery date.", action: "Confirm scope and content readiness",
     messages: [{ text: "How long would a new website take, and what are the next steps?", time: "Yesterday · 4:20 PM" }],
   },
+  {
+    id: 5, name: "The Fern House", initials: "FH", channel: "LinkedIn", status: "Waiting", unread: false, activity: "Last message 3 days ago",
+    intent: "Interested in revisiting the conversation next month",
+    suggestion: "Thanks for letting me know. I'll give you some space and check back next month. If anything changes before then, feel free to reach out.",
+    caution: "Respect the requested timeline before following up.", action: "Plan a follow-up for next month",
+    messages: [{ text: "Thank you for the overview. We'll get back to you next month.", time: "3 days ago" }],
+  },
 ];

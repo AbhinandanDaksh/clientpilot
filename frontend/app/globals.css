@@ -54,6 +54,13 @@ body {
   font-family: var(--font-outfit), sans-serif;
 }
 
+/* Selected items stay distinct from primary actions and warning badges. */
+.workspace-selected {
+  background-color: var(--dash-sage);
+  color: var(--dash-text);
+  box-shadow: inset 0 0 0 1px var(--dash-green);
+}
+
 /* Keep content visible until AOS has initialized. */
 [data-aos]:not(.aos-init) {
   opacity: 1 !important;

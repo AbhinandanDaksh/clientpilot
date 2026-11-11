@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   alternates: { canonical: "/deal-room" },
 };
 
-export default function Page() {
-  return <DealRoom />;
+export default async function Page({ searchParams }: { searchParams: Promise<{ client?: string | string[] }> }) {
+  const { client } = await searchParams;
+  const initialClientId = typeof client === "string" && /^\d+$/.test(client) && Number.isSafeInteger(Number(client)) ? Number(client) : null;
+  return <DealRoom key={initialClientId ?? "default"} initialClientId={initialClientId} />;
 }

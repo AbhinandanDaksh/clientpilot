@@ -12,6 +12,7 @@ import {
   LuChevronDown,
 } from "react-icons/lu";
 import Feedback from "@/components/ui/feedback";
+// import PreviewMode from "@/components/ui/preview-mode";
 type WorkspaceActions = {
   setActive: (item: string) => void;
   setNotice: (message: string) => void;
@@ -165,6 +166,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
           </div>
         </header>
         <main className="w-full min-w-0 max-w-none px-8 pt-6 pb-[18px] max-[1250px]:px-6 max-[850px]:p-5 max-[560px]:px-3.5 max-[560px]:py-4">
+          {/* <PreviewMode /> */}
           {children}
           <Footer />
         </main>

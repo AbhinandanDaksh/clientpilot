@@ -19,27 +19,31 @@ const validReplies = (value: unknown): value is Record<number, string> => isReco
 const validDrafts = (value: unknown): value is SavedDraft[] => Array.isArray(value) && value.every(d => isRecord(d) && typeof d.id === "number" && typeof d.clientId === "number" && typeof d.text === "string" && typeof d.time === "string");
 const validPlan = (value: unknown): value is number[] => Array.isArray(value) && value.every(id => typeof id === "number");
 
-export default function DealRoom() {
+export default function DealRoom({ initialClientId = null }: { initialClientId?: number | null }) {
   const [notice, setNotice] = useState("");
   const [deletedDraft, setDeletedDraft] = useState<SavedDraft | null>(null);
   const [storageError, setStorageError] = useState(false);
   const storageFailed = () => setStorageError(true);
-  const [clients, setClients] = usePersistentState("clientpilot:deal-room:clients:v1", demoClients, validClients, storageFailed);
-  const [selected, setSelected] = useState(1);
+  const [storedClients, setClients] = usePersistentState("clientpilot:deal-room:clients:v1", demoClients, validClients, storageFailed);
+  const clients = [...storedClients, ...demoClients.filter(sample => !storedClients.some(client => client.id === sample.id))];
+  const [selected, setSelected] = useState(initialClientId ?? 1);
   const [query, setQuery] = useState("");
   const [replies, setReplies] = usePersistentState<Record<number, string>>("clientpilot:deal-room:replies:v1", {}, validReplies, storageFailed);
   const [saved, setSaved] = usePersistentState<SavedDraft[]>("clientpilot:deal-room:drafts:v1", [], validDrafts, storageFailed);
   const [planned, setPlanned] = usePersistentState<number[]>("clientpilot:deal-room:plan:v1", [], validPlan, storageFailed);
-  const [mobileConversation, setMobileConversation] = useState(false);
+  const [mobileConversation, setMobileConversation] = useState(initialClientId !== null);
   const addDialog = useRef<HTMLDialogElement>(null);
   const composer = useRef<HTMLTextAreaElement>(null);
   const current = clients.find(client => client.id === selected) ?? clients[0];
+  const missingClient = !clients.some(client => client.id === selected);
+  const showConversation = mobileConversation && !missingClient;
   const visible = clients.filter(client => client.name.toLowerCase().includes(query.toLowerCase()));
   const reply = replies[selected] || "";
   const drafts = saved.filter(draft => draft.clientId === selected);
   function chooseClient(id: number) {
     setSelected(id); setNotice(""); setMobileConversation(true);
-    setClients(previous => previous.map(client => client.id === id ? { ...client, unread: false } : client));
+    window.history.replaceState(null, "", `/deal-room?client=${id}`);
+    setClients(clients.map(client => client.id === id ? { ...client, unread: false } : client));
   }
   async function copySuggestion() {
     try { await navigator.clipboard.writeText(current.suggestion); setNotice("Suggestion copied to clipboard. Review it before using."); }
@@ -68,17 +72,18 @@ export default function DealRoom() {
       <div><p className="mb-3 text-[12px] font-medium tracking-[1.8px] text-dash-muted">CLIENT CONVERSATIONS</p><h1 className="text-[32px] font-semibold tracking-[-1px]">Deal Room</h1><p className="mt-3 text-sm leading-6 text-dash-muted">Keep every conversation thoughtful, focused, and moving forward.</p></div>
     </header>
 
+    {missingClient && <p role="status" className="rounded-xl border border-dash-border bg-dash-card p-4 text-sm">This client is unavailable. Choose a client to continue.</p>}
     <div className="grid grid-cols-[minmax(190px,0.8fr)_minmax(0,1.45fr)_minmax(230px,1fr)] items-stretch gap-4 max-[1150px]:grid-cols-[220px_minmax(0,1fr)] max-[700px]:grid-cols-1">
-      <aside className={`${panel} ${mobileConversation ? "max-[700px]:hidden" : ""}`} aria-labelledby="clients-title">
+      <aside className={`${panel} ${showConversation ? "max-[700px]:hidden" : ""}`} aria-labelledby="clients-title">
         <div className="mb-5 flex items-center justify-between"><h2 id="clients-title" className="!text-base !tracking-tight">Clients</h2><button aria-label="Add client" onClick={() => addDialog.current?.showModal()} className="grid size-7 place-items-center rounded-lg text-dash-muted hover:bg-dash-peach"><LuPlus size={17} aria-hidden="true" /></button></div>
         <div className="[&>span]:w-full"><Input type="search" aria-label="Search clients" placeholder="Search clients" value={query} onChange={event => setQuery(event.target.value)} startIcon={<LuSearch size={14} />} /></div>
-        <ul className="mt-3 space-y-1 max-[700px]:max-h-[65dvh] max-[700px]:overflow-y-auto">{visible.map(client => <li key={client.id}><button aria-current={client.id === selected ? "true" : undefined} onClick={() => chooseClient(client.id)} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors ${client.id === selected ? "bg-dash-peach/60" : "hover:bg-dash-sage/40"}`}>
+        <ul className="mt-3 space-y-1 max-[700px]:max-h-[65dvh] max-[700px]:overflow-y-auto">{visible.map(client => <li key={client.id}><button aria-current={client.id === selected ? "true" : undefined} onClick={() => chooseClient(client.id)} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left transition-colors ${client.id === selected ? "workspace-selected" : "hover:bg-dash-sage/40"}`}>
           <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-dash-sage text-[12px] font-semibold text-dash-muted">{client.initials}</span><span className="min-w-0 flex-1"><span className="block text-sm font-medium leading-5">{client.name}</span><span className="mt-1 block truncate text-[12px] text-dash-muted">{client.messages.at(-1)?.text ?? "No messages yet"}</span><span className="mt-1 block text-[12px] text-dash-muted">{client.channel} · {client.activity}</span>{client.unread && <span className="mt-1 block text-[12px] font-medium text-dash-primary">Unread reply</span>}</span>
         </button></li>)}</ul>
         {!visible.length && <p className="py-8 text-center text-sm text-dash-muted">No clients match your search.</p>}
       </aside>
 
-      <section className={`${panel} flex min-h-[580px] min-w-0 flex-col ${mobileConversation ? "" : "max-[700px]:hidden"}`} aria-labelledby="conversation-title">
+      <section className={`${missingClient ? "!hidden" : ""} ${panel} flex min-h-[580px] min-w-0 flex-col ${showConversation ? "" : "max-[700px]:hidden"}`} aria-labelledby="conversation-title">
         <button onClick={() => setMobileConversation(false)} className="mb-4 flex min-h-11 items-center gap-2 self-start rounded-lg px-2 text-sm text-dash-primary min-[701px]:hidden"><LuArrowLeft aria-hidden="true" />All clients</button>
         <div className="flex items-start justify-between gap-3 border-b border-dash-border pb-5"><div><p className="mb-1 text-[12px] tracking-[1.6px] text-dash-muted">ACTIVE CONVERSATION</p><h2 id="conversation-title" className="!text-base !tracking-tight">{current.name}</h2><p className="mt-2 text-[12px] text-dash-muted">{current.channel} · conversation</p></div><span className="rounded-md bg-dash-peach px-2 py-1.5 text-[12px] text-dash-primary">{current.status}</span></div>
         <ol aria-label={`Conversation with ${current.name}`} className="flex max-h-[380px] flex-1 flex-col gap-3 overflow-y-auto py-6">
@@ -92,7 +97,7 @@ export default function DealRoom() {
         </form>
       </section>
 
-      <aside className={`${panel} bg-dash-sidebar/40 max-[1150px]:col-span-2 max-[700px]:col-span-1 ${mobileConversation ? "" : "max-[700px]:hidden"}`} aria-labelledby="assistant-title">
+      <aside className={`${missingClient ? "!hidden" : ""} ${panel} bg-dash-sidebar/40 max-[1150px]:col-span-2 max-[700px]:col-span-1 ${showConversation ? "" : "max-[700px]:hidden"}`} aria-labelledby="assistant-title">
         <div className="flex items-center gap-3 border-b border-dash-border pb-5"><span className="grid size-10 place-items-center rounded-xl bg-dash-lavender text-dash-purple"><LuSparkles size={20} aria-hidden="true" /></span><div><h2 id="assistant-title" className="!text-sm !font-medium !tracking-normal">AI Deal Assistant</h2><p className="mt-1 text-[12px] text-dash-muted">Context-aware suggestions</p></div></div>
         <div className="border-b border-dash-border py-5"><h3 className="text-[12px] font-medium tracking-[1.2px] text-dash-muted">CLIENT INTENT</h3><p className="mt-3 text-sm font-medium leading-6">{current.intent}</p></div>
         <div className="border-b border-dash-border py-5 max-[1150px]:hidden"><h3 className="text-[12px] font-medium tracking-[1.2px] text-dash-muted">SUGGESTED REPLY</h3><p className="mt-3 text-sm leading-6">“{current.suggestion}”</p><div className="mt-3 flex flex-wrap gap-3"><button onClick={() => void copySuggestion()} className="inline-flex items-center gap-1.5 text-[12px] font-medium text-dash-primary"><LuCopy size={13} aria-hidden="true" />Copy suggestion</button><button onClick={() => { setReplies(previous => ({ ...previous, [selected]: previous[selected]?.trim() ? `${previous[selected]}\n\n${current.suggestion}` : current.suggestion })); composer.current?.focus(); setNotice("Suggestion added to your reply. Review it before saving a draft."); }} className="inline-flex items-center gap-1 text-[12px] font-medium text-dash-primary">Use suggestion<LuArrowUpRight size={12} aria-hidden="true" /></button></div></div>

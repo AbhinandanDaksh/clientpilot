@@ -59,7 +59,7 @@ function SettingsForm() {
   const [configuration, setConfiguration] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const dirty = JSON.stringify(preferences) !== JSON.stringify(savedPreferences);
-  const statusText = status === "Unsaved changes" && !dirty ? "" : status;
+  const statusText = dirty ? (status && status !== "Changes saved in this browser." && status !== "Changes discarded." ? status : "Unsaved changes") : (status && status !== "Unsaved changes" ? status : "All changes saved");
 
   useEffect(() => {
     let frame = 0;
@@ -109,7 +109,7 @@ function SettingsForm() {
     <ScreenHeader eyebrow="WORKSPACE PREFERENCES" title="Settings" description="Manage your profile, discovery preferences, and automation settings." actions={<div className="flex min-w-0 flex-wrap items-center gap-3"><Button type="submit" form="workspace-settings" disabled={!dirty} className="disabled:cursor-not-allowed disabled:opacity-50"><LuCheck size={16} aria-hidden="true" />Save changes</Button><span role="status" aria-live="polite" className={statusText ? "text-sm text-dash-muted" : "sr-only"}>{statusText}</span></div>} />
     <div className="grid min-w-0 grid-cols-1 items-start gap-5 @min-[760px]:grid-cols-[170px_minmax(0,1fr)]">
       <nav aria-label="Settings sections" className="min-w-0 @min-[760px]:sticky @min-[760px]:top-5"><label className="block text-xs text-dash-muted @min-[760px]:hidden">Jump to section<Select aria-label="Settings section" className="mt-2 w-full" value={active} onChange={event => goToSection(event.target.value)}>{sections.map(name => <option key={name}>{name}</option>)}</Select></label><div className="hidden flex-col gap-1.5 @min-[760px]:flex">
-        {sections.map((name) => <a key={name} href={`#${sectionId(name)}`} onClick={event => { event.preventDefault(); goToSection(name); }} aria-current={active === name ? "location" : undefined} className={`whitespace-nowrap rounded-[10px] px-3 py-3 text-sm focus-visible:outline-2 focus-visible:outline-dash-primary ${active === name ? "bg-dash-card font-medium text-dash-primary" : "text-dash-muted hover:bg-dash-card"}`}>{name}</a>)}
+        {sections.map((name) => <a key={name} href={`#${sectionId(name)}`} onClick={event => { event.preventDefault(); goToSection(name); }} aria-current={active === name ? "location" : undefined} className={`whitespace-nowrap rounded-[10px] px-3 py-3 text-sm focus-visible:outline-2 focus-visible:outline-dash-primary ${active === name ? "workspace-selected font-medium" : "text-dash-muted hover:bg-dash-card"}`}>{name}</a>)}
       </div></nav>
       <form id="workspace-settings" onSubmit={(event) => { event.preventDefault(); save(); }} className="min-w-0 space-y-3 [&_section]:scroll-mt-6 [&_section]:rounded-[18px] [&_section]:border [&_section]:border-dash-border [&_section]:bg-dash-card [&_section]:p-6 max-[560px]:[&_section]:p-4 [&_h2]:!text-base [&_h2]:!tracking-[-0.4px]">
         <section id="profile" aria-labelledby="profile-heading">
