@@ -37,11 +37,11 @@ export default function Conversations() {
 
   return <div className="@container min-w-0 space-y-6">
     <ScreenHeader eyebrow="EVERY CONNECTION COUNTS" title="Conversations" description="Keep track of replies, find your next step, and pick up where you left off." actions={<Button variant="secondary" onClick={() => { exportCSV("conversations.csv", [["Client", "Channel", "Status", "Preview", "Archived"], ...visible.map(item => [item.name, item.channel, item.status, item.preview, String(item.archived)])]); setNotice("Visible conversations exported."); }}><LuDownload size={14} />Export</Button>} />
-    <section aria-label="Conversation summary" className="grid min-w-0 grid-cols-1 gap-3 @min-[440px]:grid-cols-2 @min-[1000px]:grid-cols-4">
-      <StatCard label="Active conversations" value={active.length} detail="Connections in your inbox" icon={<LuMessageCircle size={18} />} />
-      <StatCard label="Unread replies" value={active.filter(item => item.unread).length} detail="A little attention goes a long way" icon={<LuMail size={18} />} tone="bg-dash-lavender text-dash-purple" />
-      <StatCard label="Needs your reply" value={active.filter(item => item.status === "Needs reply").length} detail="Keep the conversation moving" icon={<LuClock size={18} />} tone="bg-dash-sand text-dash-orange" />
-      <StatCard label="Follow-ups" value={active.filter(item => item.status === "Following up").length} detail="Thoughtful next steps to plan" icon={<LuCheck size={18} />} tone="bg-dash-sage text-dash-green" />
+    <section aria-label="Conversation summary" className="grid min-w-0 grid-cols-2 gap-3 @min-[1000px]:grid-cols-4">
+      <StatCard compact label="Active conversations" value={active.length} detail="In your inbox" icon={<LuMessageCircle size={18} />} />
+      <StatCard compact label="Unread replies" value={active.filter(item => item.unread).length} detail="New replies" icon={<LuMail size={18} />} tone="bg-dash-lavender text-dash-purple" />
+      <StatCard compact label="Needs your reply" value={active.filter(item => item.status === "Needs reply").length} detail="Awaiting your response" icon={<LuClock size={18} />} tone="bg-dash-sand text-dash-orange" />
+      <StatCard compact label="Follow-ups" value={active.filter(item => item.status === "Following up").length} detail="Ready to plan" icon={<LuCheck size={18} />} tone="bg-dash-sage text-dash-green" />
     </section>
     <section className="min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-3 @min-[440px]:p-5">
       <div className="flex min-w-0 flex-col gap-4 @min-[900px]:flex-row @min-[900px]:items-center @min-[900px]:justify-between"><div><h2 className="!text-base">Your inbox</h2><p className="mt-2 text-[12px] text-dash-muted">A clear view of your client conversations.</p></div><div className="grid min-w-0 grid-cols-1 gap-2 @min-[440px]:grid-cols-[minmax(0,1fr)_160px] @min-[900px]:w-[420px]"><Input type="search" aria-label="Search conversations" startIcon={<LuSearch size={14} />} placeholder="Search clients or messages" value={query} onChange={event => setQuery(event.target.value)} /><Select aria-label="Filter channel" value={channel} onChange={event => setChannel(event.target.value)}>{["All channels", "Email", "Instagram DM", "LinkedIn"].map(item => <option key={item}>{item}</option>)}</Select></div></div>

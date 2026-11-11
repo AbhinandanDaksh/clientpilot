@@ -55,7 +55,8 @@ export default function DealRoom({ initialClientId = null }: { initialClientId?:
     const name = String(form.get("name") || "").trim();
     if (!name) return;
     if (clients.some(client => client.name.toLowerCase() === name.toLowerCase())) { setNotice("This client is already in the list."); return; }
-    const client: Client = { id: Date.now(), name, initials: name.split(/\s+/).slice(0, 2).map(word => word[0]).join("").toUpperCase(), channel: String(form.get("channel")), status: "New", unread: false, activity: "No messages yet", intent: "Waiting for conversation context", suggestion: "Thanks for connecting. I'd love to learn about your goals and what you need from your website. Would you be open to a short conversation?", caution: "Ask about goals and scope before making recommendations.", action: "Start a discovery conversation", messages: [] };
+    const nextClientId = clients.reduce((highest, client) => Math.max(highest, client.id), 0) + 1;
+    const client: Client = { id: nextClientId, name, initials: name.split(/\s+/).slice(0, 2).map(word => word[0]).join("").toUpperCase(), channel: String(form.get("channel")), status: "New", unread: false, activity: "No messages yet", intent: "Waiting for conversation context", suggestion: "Thanks for connecting. I'd love to learn about your goals and what you need from your website. Would you be open to a short conversation?", caution: "Ask about goals and scope before making recommendations.", action: "Start a discovery conversation", messages: [] };
     setClients(previous => [...previous, client]); setSelected(client.id); setMobileConversation(true); setQuery(""); event.currentTarget.reset(); addDialog.current?.close(); setNotice("Client saved in this browser. No external account was connected.");
   }
   function saveDraft(event: FormEvent<HTMLFormElement>) {
