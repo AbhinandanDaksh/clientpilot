@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useRef, useState, useSyncExternalStore } from "react";
 import WorkspaceSkeleton from "@/components/layout/workspace-skeleton";
+import Button from "@/components/ui/button";
+import ScreenHeader from "@/components/layout/screen-header";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
 
 const defaults = {
@@ -77,13 +79,10 @@ function SettingsForm() {
     </div>;
   }
 
-  return <div className="min-w-0 space-y-6">
-    <header className="mb-7 flex flex-wrap items-end justify-between gap-5">
-      <div><p className="text-[12px] font-medium tracking-[1.7px] text-dash-muted">WORKSPACE PREFERENCES</p><h1 className="mt-3 text-[32px] font-semibold tracking-[-1.3px]">Settings</h1><p className="mt-2 text-[13px] text-dash-muted">Tune your command center without exposing credentials in the browser.</p></div>
-      <div className="flex flex-wrap items-center gap-3"><span role="status" aria-live="polite" className="text-sm text-dash-muted">{status}</span><button type="submit" form="workspace-settings" className="rounded-[11px] bg-dash-primary px-4 py-3 text-sm font-semibold text-dash-white shadow-[0_6px_16px_var(--dash-shadow)] hover:bg-dash-primary-hover disabled:opacity-50">Save changes</button></div>
-    </header>
-    <div className="grid grid-cols-[190px_minmax(0,1fr)] items-start gap-5 max-[850px]:grid-cols-[150px_minmax(0,1fr)] max-[640px]:grid-cols-1">
-      <nav aria-label="Settings sections" className="sticky top-5 flex flex-col gap-1.5 max-[640px]:static max-[640px]:flex-row max-[640px]:overflow-x-auto">
+  return <div className="@container min-w-0 space-y-6">
+    <ScreenHeader eyebrow="WORKSPACE PREFERENCES" title="Settings" description="Manage your profile, discovery preferences, and automation settings." actions={<div className="flex min-w-0 flex-wrap items-center gap-3"><Button type="submit" form="workspace-settings"><LuCheck size={16} aria-hidden="true" />Save changes</Button><span role="status" aria-live="polite" className={status ? "text-sm text-dash-muted" : "sr-only"}>{status}</span></div>} />
+    <div className="grid min-w-0 grid-cols-1 items-start gap-5 @min-[760px]:grid-cols-[170px_minmax(0,1fr)]">
+      <nav aria-label="Settings sections" className="flex min-w-0 flex-wrap gap-1.5 @min-[760px]:sticky @min-[760px]:top-5 @min-[760px]:flex-col">
         {sections.map((name) => <a key={name} href={`#${sectionId(name)}`} onClick={() => setActive(name)} aria-current={active === name ? "location" : undefined} className={`whitespace-nowrap rounded-[10px] px-3 py-3 text-sm focus-visible:outline-2 focus-visible:outline-dash-primary ${active === name ? "bg-dash-card font-medium text-dash-primary" : "text-dash-muted hover:bg-dash-card"}`}>{name}</a>)}
       </nav>
       <form id="workspace-settings" onSubmit={(event) => { event.preventDefault(); save(); }} className="min-w-0 space-y-3 [&_section]:scroll-mt-6 [&_section]:rounded-[18px] [&_section]:border [&_section]:border-dash-border [&_section]:bg-dash-card [&_section]:p-6 max-[560px]:[&_section]:p-4 [&_h2]:!text-base [&_h2]:!tracking-[-0.4px]">

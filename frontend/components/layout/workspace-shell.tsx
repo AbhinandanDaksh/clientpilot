@@ -106,13 +106,13 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
         onToggle={() => setCollapsed(!collapsed)}
       />
       <div className="min-w-0 flex-1">
-        <header className="flex h-[73px] items-center justify-between border-b border-dash-border px-[3.1%] [&_p]:mb-[3px] [&_p]:text-[12px] [&_p]:text-dash-muted [&_p_span]:text-dash-text [&_strong]:text-sm max-[850px]:px-6 max-[560px]:px-4">
-          <div className="flex min-w-0 items-center gap-3">
+        <header className="flex h-[73px] items-center justify-between gap-2 border-b border-dash-border px-[3.1%] max-[850px]:px-5 max-[560px]:px-3">
+          <div className="flex min-w-0 flex-1 items-center gap-2 min-[561px]:gap-3">
             <button
               ref={menuTrigger}
               aria-label="Open workspace menu"
               aria-haspopup="dialog"
-              className="hidden size-10 shrink-0 items-center justify-center rounded-lg text-dash-muted hover:bg-dash-sand max-[850px]:inline-flex"
+              className="hidden size-11 shrink-0 items-center justify-center rounded-lg text-dash-muted hover:bg-dash-sand max-[850px]:inline-flex"
               onClick={() => {
                 mobileMenu.current?.showModal();
                 document.body.style.overflow = "hidden";
@@ -120,16 +120,16 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
             >
               <LuMenu aria-hidden="true" size={22} />
             </button>
-            <div>
-            <p>
+            <div className="min-w-0">
+            <p className="mb-1 hidden truncate text-xs text-dash-muted min-[851px]:block">
               Workspace / <span>{active}</span>
             </p>
-            <strong>{active}</strong>
+            <strong title={active} className="block truncate text-sm font-semibold">{active}</strong>
             </div>
           </div>
-          <div className="flex items-center gap-3.5 max-[560px]:gap-[5px]">
+          <div className="flex shrink-0 items-center gap-1 min-[561px]:gap-2">
             <button
-              className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand"
+              className="hidden size-11 shrink-0 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand min-[561px]:inline-flex"
               aria-label="Help"
               onClick={() =>
                 setNotice(
@@ -140,7 +140,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
               <LuCircleHelp aria-hidden="true" size={18} />
             </button>
             <button
-              className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand relative [&_i]:absolute [&_i]:top-1 [&_i]:right-[5px] [&_i]:size-[5px] [&_i]:rounded-full [&_i]:bg-dash-primary"
+              className="relative inline-flex size-11 shrink-0 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand [&_i]:absolute [&_i]:top-2 [&_i]:right-2 [&_i]:size-[5px] [&_i]:rounded-full [&_i]:bg-dash-primary"
               aria-label="Notifications"
               onClick={() =>
                 setNotice(
@@ -151,16 +151,16 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
               <LuBell aria-hidden="true" size={18} />
               <i />
             </button>
-            <span className="h-6 w-px bg-dash-border" />
+            <span aria-hidden="true" className="hidden h-6 w-px bg-dash-border min-[561px]:block" />
             <button
-              className="flex items-center gap-3 border-0 bg-transparent text-dash-muted"
+              className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand"
               aria-label="Open account settings"
               onClick={() => setActive("Settings")}
             >
               <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[12px] font-bold text-dash-avatar-text">
                 AK
               </span>
-              <LuChevronDown aria-hidden="true" size={14} />
+              <LuChevronDown aria-hidden="true" size={14} className="max-[560px]:hidden" />
             </button>
           </div>
         </header>
