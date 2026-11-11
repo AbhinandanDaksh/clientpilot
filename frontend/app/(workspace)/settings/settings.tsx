@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
 
 const defaults = {
@@ -17,10 +17,6 @@ const sectionId = (name: string) => name.toLowerCase().replaceAll(" ", "-");
 const storageKey = "clientpilot-workspace-settings-v1";
 const inputClass = "mt-2 w-full rounded-[9px] border border-dash-border bg-transparent px-3 py-3 text-xs text-dash-text outline-none focus:border-dash-primary focus:ring-2 focus:ring-dash-peach";
 const buttonClass = "inline-flex items-center justify-center gap-2 rounded-[10px] border border-dash-border px-3 py-2 text-xs text-dash-text transition-colors hover:bg-dash-peach";
-const palette = {
-  "--dash-bg": "#faf8f5", "--dash-card": "#fffdfa", "--dash-border": "#ece2d9",
-  "--dash-text": "#302d29", "--dash-muted": "#968d85",
-} as CSSProperties;
 
 export default function Settings() {
   const [preferences, setPreferences] = useState(defaults);
@@ -65,15 +61,15 @@ export default function Settings() {
     return <div className="flex items-center justify-between gap-5 py-3">
       <div><p className="text-xs font-medium">{title}</p><p className="mt-1 text-xs text-dash-muted">{description}</p></div>
       <button type="button" role="switch" aria-checked={preferences[key]} aria-label={title} onClick={() => update(key, !preferences[key])} className={`inline-flex h-6 w-11 shrink-0 items-center rounded-full p-1 ${preferences[key] ? "bg-dash-primary" : "bg-dash-border"}`}>
-        <span className={`size-4 rounded-full bg-white ${preferences[key] ? "translate-x-5" : "translate-x-0"} ${preferences.reducedMotion ? "" : "transition-transform"}`} />
+        <span className={`size-4 rounded-full bg-dash-white ${preferences[key] ? "translate-x-5" : "translate-x-0"} ${preferences.reducedMotion ? "" : "transition-transform"}`} />
       </button>
     </div>;
   }
 
-  return <div style={palette} className="-mx-8 -mt-6 min-h-screen bg-dash-bg px-8 pt-10 pb-8 max-[1250px]:-mx-6 max-[1250px]:px-6 max-[850px]:-mx-5 max-[850px]:-mt-5 max-[850px]:px-5 max-[560px]:-mx-3.5 max-[560px]:-mt-4 max-[560px]:px-3.5">
+  return <div className="min-w-0 space-y-6">
     <header className="mb-7 flex flex-wrap items-end justify-between gap-5">
       <div><p className="text-[10px] font-medium tracking-[1.7px] text-dash-muted">WORKSPACE PREFERENCES</p><h1 className="mt-3 text-[32px] font-semibold tracking-[-1.3px]">Settings</h1><p className="mt-2 text-[13px] text-dash-muted">Tune your command center without exposing credentials in the browser.</p></div>
-      <div className="flex flex-wrap items-center gap-3"><span role="status" aria-live="polite" className="text-xs text-dash-muted">{status}</span><button type="submit" form="workspace-settings" disabled={!ready} className="rounded-[11px] bg-dash-primary px-4 py-3 text-xs font-semibold text-white shadow-[0_6px_16px_var(--dash-shadow)] hover:bg-dash-primary-hover disabled:opacity-50">Save changes</button></div>
+      <div className="flex flex-wrap items-center gap-3"><span role="status" aria-live="polite" className="text-xs text-dash-muted">{status}</span><button type="submit" form="workspace-settings" disabled={!ready} className="rounded-[11px] bg-dash-primary px-4 py-3 text-xs font-semibold text-dash-white shadow-[0_6px_16px_var(--dash-shadow)] hover:bg-dash-primary-hover disabled:opacity-50">Save changes</button></div>
     </header>
     <div className="grid grid-cols-[190px_minmax(0,1fr)] items-start gap-5 max-[850px]:grid-cols-[150px_minmax(0,1fr)] max-[640px]:grid-cols-1">
       <nav aria-label="Settings sections" className="sticky top-5 flex flex-col gap-1.5 max-[640px]:static max-[640px]:flex-row max-[640px]:overflow-x-auto">
