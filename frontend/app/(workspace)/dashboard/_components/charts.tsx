@@ -20,7 +20,7 @@ const tooltip = { backgroundColor: "var(--dash-card)", border: "1px solid var(--
 
 export function WeeklyActivityChart() {
   return (
-    <div className="mt-5 h-[190px] w-full min-w-0" role="group" aria-label="Sample weekly activity: Monday 34, Tuesday 52, Wednesday 42, Thursday 68, Friday 58, Saturday 84, Sunday 96 actions.">
+    <div className="mt-5 h-[190px] w-full min-w-0" role="group" aria-label="weekly activity: Monday 34, Tuesday 52, Wednesday 42, Thursday 68, Friday 58, Saturday 84, Sunday 96 actions.">
       <ResponsiveContainer width="100%" height="100%" minWidth={0}>
         <BarChart data={activity} margin={{ top: 8, right: 4, bottom: 0, left: -24 }} accessibilityLayer>
           <CartesianGrid vertical={false} stroke="var(--dash-border)" strokeDasharray="3 3" />
@@ -38,13 +38,13 @@ export function OutreachTrendChart() {
   return (
     <section data-aos="fade-up" className="mt-7 min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
-        <div><h2>Outreach momentum</h2><p className="mt-1 text-xs text-dash-muted">Leads and replies over six weeks &middot; Sample data</p></div>
+        <div><h2>Outreach momentum</h2><p className="mt-1 text-xs text-dash-muted">Leads and replies over six weeks</p></div>
         <div className="flex gap-4 text-xs text-dash-muted">
           <span className="flex items-center gap-2"><i className="size-2 rounded-full bg-dash-primary" />Leads</span>
           <span className="flex items-center gap-2"><i className="size-2 rounded-full bg-dash-green" />Replies</span>
         </div>
       </div>
-      <div className="h-[250px] w-full min-w-0 max-[560px]:h-[210px]" role="group" aria-label="Sample outreach trend: leads increase from 18 to 58 and replies from 4 to 24 over six weeks.">
+      <div className="h-[250px] w-full min-w-0 max-[560px]:h-[210px]" role="group" aria-label="outreach trend: leads increase from 18 to 58 and replies from 4 to 24 over six weeks.">
         <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <AreaChart data={outreach} margin={{ top: 10, right: 10, bottom: 0, left: -24 }} accessibilityLayer>
             <CartesianGrid vertical={false} stroke="var(--dash-border)" strokeDasharray="3 3" />
@@ -79,8 +79,8 @@ export function PipelineCharts() {
     <div className="mt-7 grid min-w-0 grid-cols-2 gap-4 max-[850px]:grid-cols-1">
       <section data-aos="fade-up" className="min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
         <h2>Where leads come from</h2>
-        <p className="mt-1 text-xs text-dash-muted">Lead source breakdown &middot; Sample data</p>
-        <div className="relative mx-auto h-[230px] w-full max-w-[320px]" role="group" aria-label="Sample lead sources: Website 42 percent, Referrals 28 percent, Social 18 percent, Outreach 12 percent.">
+        <p className="mt-1 text-xs text-dash-muted">Lead source breakdown</p>
+        <div className="relative mx-auto h-[230px] w-full max-w-[320px]" role="group" aria-label="lead sources: Website 42 percent, Referrals 28 percent, Social 18 percent, Outreach 12 percent.">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <PieChart accessibilityLayer>
               <Pie data={sources} dataKey="value" nameKey="name" innerRadius="62%" outerRadius="85%" paddingAngle={4} stroke="var(--dash-card)" strokeWidth={3} isAnimationActive={false} />
@@ -104,8 +104,8 @@ export function PipelineCharts() {
       </section>
       <section data-aos="fade-up" className="min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
         <h2>Your deal pipeline</h2>
-        <p className="mt-1 text-xs text-dash-muted">Opportunities by stage &middot; Sample data</p>
-        <div className="mt-6 h-[265px] w-full min-w-0" role="group" aria-label="Sample pipeline: 48 new leads, 32 contacted, 19 in discussion, 11 proposals sent, 6 won.">
+        <p className="mt-1 text-xs text-dash-muted">Opportunities by stage</p>
+        <div className="mt-6 h-[265px] w-full min-w-0" role="group" aria-label="pipeline: 48 new leads, 32 contacted, 19 in discussion, 11 proposals sent, 6 won.">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <BarChart data={pipeline} layout="vertical" margin={{ top: 4, right: 16, bottom: 0, left: 0 }} accessibilityLayer>
               <CartesianGrid horizontal={false} stroke="var(--dash-border)" strokeDasharray="3 3" />

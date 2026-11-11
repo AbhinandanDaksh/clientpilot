@@ -55,7 +55,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
       previous.includes(name) ? previous : [...previous, name],
     );
     setNotice(
-      `${name}: demo run complete. Connect your agent backend to discover live results.`,
+      `${name}: preview complete. Connect your agent backend to discover live results.`,
     );
   };
   return (
@@ -134,7 +134,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
               aria-label="Help"
               onClick={() =>
                 setNotice(
-                  "Welcome to ClientPilot. This preview uses sample data; no messages are sent and no live agents are run.",
+                  "Welcome to ClientPilot. Discover leads, review outreach drafts, and manage your client pipeline.",
                 )
               }
             >
@@ -145,7 +145,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
               aria-label="Notifications"
               onClick={() =>
                 setNotice(
-                  "You have 6 drafts ready to review and 2 new client replies. These are demo notifications.",
+                  "Open AI Writer to review drafts or Conversations to check client replies.",
                 )
               }
             >

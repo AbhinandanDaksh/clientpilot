@@ -3,7 +3,7 @@ import AgentActivity from "./agent-activity";
 
 export const metadata: Metadata = {
   title: "Agent Activity",
-  description: "Review AI agent activity and demo runs in ClientPilot.",
+  description: "Review AI agent activity and runs in ClientPilot.",
   alternates: { canonical: "/agent-activity" },
 };
 

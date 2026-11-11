@@ -6,7 +6,7 @@ import {
   LuMessageCircle,
   LuCalendarDays,
 } from "react-icons/lu";
-// Sample data for the dashboard preview. Replace with API data when connected.
+// data for the dashboard preview. Replace with API data when connected.
 export const metrics = [
   {
     icon: LuCompass,

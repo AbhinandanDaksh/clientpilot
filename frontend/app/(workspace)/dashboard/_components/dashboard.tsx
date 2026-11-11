@@ -120,7 +120,7 @@ export default function Dashboard() {
                           aria-label={`${agent.name} details`}
                           onClick={() =>
                             setNotice(
-                              `${agent.name}: ${agent.description}. Last demo run ${agent.time} ago.`,
+                              `${agent.name}: ${agent.description}. Last run ${agent.time} ago.`,
                             )
                           }
                         >
@@ -137,7 +137,7 @@ export default function Dashboard() {
                       <div className="flex items-center justify-between border-t border-dash-border pt-3 [&_small]:text-[10px] [&_small]:text-dash-muted">
                         <small>
                           {ran.includes(agent.name)
-                            ? "Demo ran just now"
+                            ? "Previewed just now"
                             : `Ran ${agent.time} ago`}
                         </small>
                         <button
@@ -190,7 +190,7 @@ export default function Dashboard() {
                         aria-label={`View ${lead.name}`}
                         onClick={() =>
                           setNotice(
-                            `${lead.name} · ${lead.type} · ${lead.score}% match. This is a sample lead.`,
+                            `${lead.name} · ${lead.type} · ${lead.score}% match. This is a lead.`,
                           )
                         }
                       >
@@ -210,7 +210,7 @@ export default function Dashboard() {
                     Your next chapter is taking shape.
                   </p>
                   <WeeklyActivityChart />
-                  <p className="mt-2 text-[10px] text-dash-muted">Weekly actions ? Sample data</p>
+                  <p className="mt-2 text-[10px] text-dash-muted">Weekly actions</p>
                 </section>
               </div>
             </>

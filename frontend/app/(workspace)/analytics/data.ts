@@ -1,5 +1,5 @@
 ﻿export const channels = ["Email", "Instagram DM", "LinkedIn"];
-// Deterministic demo observations; these are not connected account statistics.
+// Deterministic preview observations; these are not connected account statistics.
 export const observations = Array.from({ length: 30 }, (_, day) => channels.map((channel, index) => {
   const leads = 5 + ((day * 3 + index * 5) % 12);
   const outreach = Math.floor(leads * 0.75);

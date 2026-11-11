@@ -19,7 +19,7 @@ export default function Footer() {
       </p>
       <p className="shrink-0">
         <span>&copy; {year !== null ? String(year) + " " : ""}ClientPilot</span>
-        {/* <span className="rounded-full border border-dash-border bg-dash-card px-2.5 py-0.5 text-[10px]">Demo workspace</span> */}
+        
       </p>
     </footer>
   );
