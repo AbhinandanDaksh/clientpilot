@@ -6,7 +6,6 @@ type LoadingProps = {
 
 export default function Loading({
   label = "Just a moment",
-  description = "Your workspace is on its way.",
   className = "",
 }: LoadingProps) {
   return (
@@ -18,7 +17,6 @@ export default function Loading({
       </div>
       <div>
         <p className="text-base font-medium tracking-tight text-dash-text">{label}</p>
-        {/* {description && <p className="mt-2 max-w-64 text-xs leading-5 text-dash-muted">{description}</p>} */}
       </div>
     </div>
   );

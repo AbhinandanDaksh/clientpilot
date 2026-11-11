@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
+import WorkspaceSkeleton from "@/components/layout/workspace-skeleton";
 import { LuCheck, LuPencil, LuX } from "react-icons/lu";
 
 const defaults = {
@@ -18,30 +19,40 @@ const storageKey = "clientpilot-workspace-settings-v1";
 const inputClass = "mt-2 w-full rounded-[9px] border border-dash-border bg-transparent px-3 py-3 text-xs text-dash-text outline-none focus:border-dash-primary focus:ring-2 focus:ring-dash-peach";
 const buttonClass = "inline-flex items-center justify-center gap-2 rounded-[10px] border border-dash-border px-3 py-2 text-xs text-dash-text transition-colors hover:bg-dash-peach";
 
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+
+function readSavedPreferences() {
+  const preferences = { ...defaults };
+  try {
+    const stored: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "null");
+    if (stored && typeof stored === "object") {
+      for (const key of Object.keys(defaults) as (keyof Preferences)[]) {
+        const value = (stored as Record<string, unknown>)[key];
+        if (typeof value === typeof defaults[key]) Object.assign(preferences, { [key]: value });
+      }
+    }
+    return { preferences, error: "" };
+  } catch {
+    return { preferences, error: "Saved preferences could not be loaded. You can save new preferences below." };
+  }
+}
+
 export default function Settings() {
-  const [preferences, setPreferences] = useState(defaults);
+  const hydrated = useSyncExternalStore(subscribeToHydration, clientSnapshot, serverSnapshot);
+  return hydrated ? <SettingsForm /> : <WorkspaceSkeleton />;
+}
+
+function SettingsForm() {
+  const [initial] = useState(readSavedPreferences);
+  const [preferences, setPreferences] = useState(initial.preferences);
   const [active, setActive] = useState("Profile");
-  const [status, setStatus] = useState("");
-  const [ready, setReady] = useState(false);
+  const [status, setStatus] = useState(initial.error);
   const [editing, setEditing] = useState(false);
   const [profile, setProfile] = useState({ name: defaults.name, studio: defaults.studio });
   const [configuration, setConfiguration] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    try {
-      const stored: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "null");
-      if (stored && typeof stored === "object") {
-        const restored = { ...defaults };
-        for (const key of Object.keys(defaults) as (keyof Preferences)[]) {
-          const value = (stored as Record<string, unknown>)[key];
-          if (typeof value === typeof defaults[key]) Object.assign(restored, { [key]: value });
-        }
-        setPreferences(restored);
-      }
-    } catch { setStatus("Saved preferences could not be loaded. You can save new preferences below."); }
-    setReady(true);
-  }, []);
 
   function update<K extends keyof Preferences>(key: K, value: Preferences[K]) {
     setPreferences((previous) => ({ ...previous, [key]: value }));
@@ -69,7 +80,7 @@ export default function Settings() {
   return <div className="min-w-0 space-y-6">
     <header className="mb-7 flex flex-wrap items-end justify-between gap-5">
       <div><p className="text-[10px] font-medium tracking-[1.7px] text-dash-muted">WORKSPACE PREFERENCES</p><h1 className="mt-3 text-[32px] font-semibold tracking-[-1.3px]">Settings</h1><p className="mt-2 text-[13px] text-dash-muted">Tune your command center without exposing credentials in the browser.</p></div>
-      <div className="flex flex-wrap items-center gap-3"><span role="status" aria-live="polite" className="text-xs text-dash-muted">{status}</span><button type="submit" form="workspace-settings" disabled={!ready} className="rounded-[11px] bg-dash-primary px-4 py-3 text-xs font-semibold text-dash-white shadow-[0_6px_16px_var(--dash-shadow)] hover:bg-dash-primary-hover disabled:opacity-50">Save changes</button></div>
+      <div className="flex flex-wrap items-center gap-3"><span role="status" aria-live="polite" className="text-xs text-dash-muted">{status}</span><button type="submit" form="workspace-settings" className="rounded-[11px] bg-dash-primary px-4 py-3 text-xs font-semibold text-dash-white shadow-[0_6px_16px_var(--dash-shadow)] hover:bg-dash-primary-hover disabled:opacity-50">Save changes</button></div>
     </header>
     <div className="grid grid-cols-[190px_minmax(0,1fr)] items-start gap-5 max-[850px]:grid-cols-[150px_minmax(0,1fr)] max-[640px]:grid-cols-1">
       <nav aria-label="Settings sections" className="sticky top-5 flex flex-col gap-1.5 max-[640px]:static max-[640px]:flex-row max-[640px]:overflow-x-auto">
