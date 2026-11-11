@@ -11,7 +11,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="mt-6 flex w-full min-w-0 flex-col items-center gap-3 border-t border-dash-border py-5 text-center text-[11px] leading-5 text-dash-muted sm:flex-row sm:flex-wrap sm:justify-between sm:text-left">
+    <footer className="mt-6 flex w-full min-w-0 flex-col items-center gap-3 border-t border-dash-border py-5 text-center text-[12px] leading-5 text-dash-muted sm:flex-row sm:flex-wrap sm:justify-between sm:text-left">
       <p className="flex min-w-0 flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:justify-start">
         <span className="font-semibold text-dash-text">Client<span className="text-dash-primary">Pilot</span></span>
         <span className="hidden sm:inline" aria-hidden="true">&middot;</span>

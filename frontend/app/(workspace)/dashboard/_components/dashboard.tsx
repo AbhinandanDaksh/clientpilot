@@ -16,7 +16,7 @@ export default function Dashboard() {
             <>
               <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
                 <div className="relative z-1">
-                  <p className="mb-[18px] flex items-center gap-2.5 text-[9px] font-semibold tracking-[1px] text-dash-primary max-[560px]:text-[8px]">
+                  <p className="mb-[18px] flex items-center gap-2.5 text-[12px] font-semibold tracking-[1px] text-dash-primary max-[560px]:text-[12px]">
                     <span className="inline-block size-1.5 shrink-0 rounded-full bg-dash-green shadow-[0_0_0_4px_var(--dash-sage)]" />
                     MONDAY, 07 OCTOBER 2024
                   </p>
@@ -25,7 +25,7 @@ export default function Dashboard() {
                     <br />
                     <span>let&apos;s find your next client.</span>
                   </h1>
-                  <p className="mb-[25px] text-[13px] text-dash-muted max-[560px]:text-xs max-[560px]:leading-[1.8]">
+                  <p className="mb-[25px] text-[13px] text-dash-muted max-[560px]:text-sm max-[560px]:leading-[1.8]">
                     Your AI agents are working behind the scenes to grow your
                     freelance business.
                   </p>
@@ -40,7 +40,7 @@ export default function Dashboard() {
                     >
                       <LuPencilLine aria-hidden="true" size={15} />
                       Review drafts
-                      <span className="rounded-sm bg-dash-peach px-[5px] py-0.5 text-[9px] text-dash-primary">
+                      <span className="rounded-sm bg-dash-peach px-[5px] py-0.5 text-[12px] text-dash-primary">
                         6
                       </span>
                     </Button>
@@ -72,7 +72,7 @@ export default function Dashboard() {
               >
                 {metrics.map((metric) => (
                   <article
-                    className="min-h-[146px] rounded-[18px] border border-dash-border bg-dash-card p-[15px] [&_p]:mt-5 [&_p]:mb-[3px] [&_p]:text-[11px] [&_p]:whitespace-nowrap [&_p]:text-dash-muted [&>div]:flex [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-1 [&_strong]:text-[27px] [&_strong]:font-semibold [&_strong]:tracking-[-1px] [&_small]:text-[9px] [&_small]:whitespace-nowrap [&_small]:text-dash-green max-[1250px]:[&_p]:mt-[15px] max-[560px]:p-[13px] max-[560px]:[&_p]:min-h-7 max-[560px]:[&_p]:text-[10px] max-[560px]:[&_p]:whitespace-normal"
+                    className="min-h-[146px] rounded-[18px] border border-dash-border bg-dash-card p-[15px] [&_p]:mt-5 [&_p]:mb-[3px] [&_p]:text-[12px] [&_p]:whitespace-nowrap [&_p]:text-dash-muted [&>div]:flex [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-1 [&_strong]:text-[27px] [&_strong]:font-semibold [&_strong]:tracking-[-1px] [&_small]:text-[12px] [&_small]:whitespace-nowrap [&_small]:text-dash-green max-[1250px]:[&_p]:mt-[15px] max-[560px]:p-[13px] max-[560px]:[&_p]:min-h-7 max-[560px]:[&_p]:text-[12px] max-[560px]:[&_p]:whitespace-normal"
                     key={metric.label}
                   >
                     <span
@@ -89,9 +89,9 @@ export default function Dashboard() {
                 ))}
               </section>
               <section data-aos="fade-up">
-                <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-xs [&>button]:max-[560px]:whitespace-nowrap">
+                <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-sm [&>button]:max-[560px]:whitespace-nowrap">
                   <div>
-                    <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
+                    <p className="mb-2.5 text-[12px] font-semibold tracking-[1.5px] text-dash-muted">
                       YOUR AI TEAM
                     </p>
                     <h2>Agents at work</h2>
@@ -106,7 +106,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-4 gap-3 max-[1250px]:grid-cols-2 max-[560px]:grid-cols-1">
                   {agents.map((agent) => (
                     <article
-                      className="rounded-[18px] border border-dash-border bg-dash-card p-[17px] [&_h3]:mb-1 [&_h3]:flex [&_h3]:items-center [&_h3]:gap-2 [&_h3]:text-[13px] [&_h3]:font-semibold [&>p]:mb-5 [&>p]:text-xs [&>p]:text-dash-muted"
+                      className="rounded-[18px] border border-dash-border bg-dash-card p-[17px] [&_h3]:mb-1 [&_h3]:flex [&_h3]:items-center [&_h3]:gap-2 [&_h3]:text-[13px] [&_h3]:font-semibold [&>p]:mb-5 [&>p]:text-sm [&>p]:text-dash-muted"
                       key={agent.name}
                     >
                       <div className="mb-5 flex items-start justify-between [&>span]:size-9">
@@ -134,7 +134,7 @@ export default function Dashboard() {
                         />
                       </h3>
                       <p>{agent.description}</p>
-                      <div className="flex items-center justify-between border-t border-dash-border pt-3 [&_small]:text-[10px] [&_small]:text-dash-muted">
+                      <div className="flex items-center justify-between border-t border-dash-border pt-3 [&_small]:text-[12px] [&_small]:text-dash-muted">
                         <small>
                           {ran.includes(agent.name)
                             ? "Previewed just now"
@@ -156,9 +156,9 @@ export default function Dashboard() {
               <PipelineCharts />
               <div className="mt-7 grid grid-cols-[1.65fr_1fr] gap-4 max-[850px]:grid-cols-1">
                 <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
-                  <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-xs [&>button]:max-[560px]:whitespace-nowrap">
+                  <div className="mb-[18px] flex items-center justify-between gap-4 [&_p]:mb-1 [&>button]:max-[560px]:text-sm [&>button]:max-[560px]:whitespace-nowrap">
                     <div>
-                      <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
+                      <p className="mb-2.5 text-[12px] font-semibold tracking-[1.5px] text-dash-muted">
                         YOUR NEXT OPPORTUNITIES
                       </p>
                       <h2>Fresh leads, real potential</h2>
@@ -172,17 +172,17 @@ export default function Dashboard() {
                   </div>
                   {leads.map((lead) => (
                     <div
-                      className="flex items-center gap-3.5 border-b border-dash-border py-[17px] last:border-b-0 [&_h3]:m-0 [&_h3]:text-xs [&_h3]:font-semibold [&_p]:mt-[3px] [&_p]:text-[11px] [&_p]:text-dash-muted max-[560px]:gap-2"
+                      className="flex items-center gap-3.5 border-b border-dash-border py-[17px] last:border-b-0 [&_h3]:m-0 [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mt-[3px] [&_p]:text-[12px] [&_p]:text-dash-muted max-[560px]:gap-2"
                       key={lead.name}
                     >
-                      <span className="grid size-[34px] shrink-0 place-items-center rounded-[11px] bg-dash-sage text-[10px] font-semibold text-dash-green">
+                      <span className="grid size-[34px] shrink-0 place-items-center rounded-[11px] bg-dash-sage text-[12px] font-semibold text-dash-green">
                         {lead.initials}
                       </span>
                       <div>
                         <h3>{lead.name}</h3>
                         <p>{lead.type}</p>
                       </div>
-                      <span className="ml-auto rounded-md bg-dash-sage px-2 py-1 text-[10px] text-dash-green max-[560px]:px-1 max-[560px]:text-[8px]">
+                      <span className="ml-auto rounded-md bg-dash-sage px-2 py-1 text-[12px] text-dash-green max-[560px]:px-1 max-[560px]:text-[12px]">
                         {lead.score} match
                       </span>
                       <button
@@ -200,17 +200,17 @@ export default function Dashboard() {
                   ))}
                 </section>
                 <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
-                  <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted">
+                  <p className="mb-2.5 text-[12px] font-semibold tracking-[1.5px] text-dash-muted">
                     A LITTLE MOMENTUM
                   </p>
                   <h2>You&apos;re moving forward.</h2>
-                  <p className="mt-3 text-xs leading-[1.9] text-dash-muted">
+                  <p className="mt-3 text-sm leading-[1.9] text-dash-muted">
                     Small actions. Meaningful connections.
                     <br />
                     Your next chapter is taking shape.
                   </p>
                   <WeeklyActivityChart />
-                  <p className="mt-2 text-[10px] text-dash-muted">Weekly actions</p>
+                  <p className="mt-2 text-[12px] text-dash-muted">Weekly actions</p>
                 </section>
               </div>
             </>

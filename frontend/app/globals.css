@@ -67,3 +67,15 @@ body {
     transition: none !important;
   }
 }
+
+/* Shared interaction rules for workspace pages and native dialogs. */
+.dashboard-shell :where(button, a, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--dash-primary);
+  outline-offset: 3px;
+}
+.dashboard-shell :where(button[aria-label]:not([aria-pressed])) { min-width: 44px; min-height: 44px; }
+.dashboard-shell :where(button:disabled) { cursor: not-allowed; }
+.dashboard-shell :where(dialog:not([aria-label="Workspace menu"])) { max-height: calc(100dvh - 32px); overflow-y: auto; }
+@media (max-width: 560px) {
+  .dashboard-shell :where(button, a[role="button"], summary) { min-height: 44px; }
+}

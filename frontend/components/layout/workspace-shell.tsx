@@ -7,12 +7,11 @@ import Footer from "@/components/layout/footer";
 import {
   LuMenu,
   LuX,
-  LuSparkles,
   LuBell,
   LuCircleHelp,
   LuChevronDown,
 } from "react-icons/lu";
-import Button from "@/components/ui/button";
+import Feedback from "@/components/ui/feedback";
 type WorkspaceActions = {
   setActive: (item: string) => void;
   setNotice: (message: string) => void;
@@ -107,7 +106,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
         onToggle={() => setCollapsed(!collapsed)}
       />
       <div className="min-w-0 flex-1">
-        <header className="flex h-[73px] items-center justify-between border-b border-dash-border px-[3.1%] [&_p]:mb-[3px] [&_p]:text-[11px] [&_p]:text-dash-muted [&_p_span]:text-dash-text [&_strong]:text-sm max-[850px]:px-6 max-[560px]:px-4">
+        <header className="flex h-[73px] items-center justify-between border-b border-dash-border px-[3.1%] [&_p]:mb-[3px] [&_p]:text-[12px] [&_p]:text-dash-muted [&_p_span]:text-dash-text [&_strong]:text-sm max-[850px]:px-6 max-[560px]:px-4">
           <div className="flex min-w-0 items-center gap-3">
             <button
               ref={menuTrigger}
@@ -158,7 +157,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
               aria-label="Open account settings"
               onClick={() => setActive("Settings")}
             >
-              <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[11px] font-bold text-dash-avatar-text">
+              <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[12px] font-bold text-dash-avatar-text">
                 AK
               </span>
               <LuChevronDown aria-hidden="true" size={14} />
@@ -170,32 +169,7 @@ export default function WorkspaceShell({ children }: { children: ReactNode }) {
           <Footer />
         </main>
       </div>
-      {notice && (
-        <div
-          className="fixed inset-0 z-30 grid place-items-center bg-dash-overlay p-6"
-          onClick={() => setNotice("")}
-        >
-          <section data-aos="fade-up"
-            className="w-full max-w-[440px] rounded-[20px] border border-dash-border bg-dash-card p-[30px] shadow-[0_20px_80px_var(--dash-shadow)] [&_h2]:mt-[18px] [&_p]:mt-3 [&_p]:mb-6 [&_p]:leading-[1.8] [&_p]:text-dash-muted"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Workspace update"
-            onClick={(event) => event.stopPropagation()}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") setNotice("");
-            }}
-          >
-            <span className="inline-flex size-[33px] shrink-0 items-center justify-center rounded-[10px] bg-dash-peach text-dash-primary">
-              <LuSparkles aria-hidden="true" size={18} />
-            </span>
-            <h2>Workspace update</h2>
-            <p>{notice}</p>
-            <Button autoFocus onClick={() => setNotice("")}>
-              Got it
-            </Button>
-          </section>
-        </div>
-      )}
+      <Feedback message={notice} onDismiss={() => setNotice("")} />
     </div>
     </WorkspaceContext.Provider>
   );

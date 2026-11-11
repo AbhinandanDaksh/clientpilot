@@ -1,11 +1,11 @@
 import type { ComponentProps } from "react";
 
 export function Table({ className = "", ...props }: ComponentProps<"table">) {
-  return <div className="w-full overflow-x-auto rounded-xl border border-dash-border"><table className={`w-full border-collapse text-left text-xs text-dash-text ${className}`} {...props} /></div>;
+  return <div className="w-full overflow-x-auto rounded-xl border border-dash-border"><table className={`w-full border-collapse text-left text-sm text-dash-text ${className}`} {...props} /></div>;
 }
 
 export function TableHeader({ className = "", ...props }: ComponentProps<"thead">) {
-  return <thead className={`bg-dash-sidebar/70 text-[10px] tracking-[1.3px] text-dash-muted ${className}`} {...props} />;
+  return <thead className={`bg-dash-sidebar/70 text-[12px] tracking-[1.3px] text-dash-muted ${className}`} {...props} />;
 }
 
 export function TableBody({ className = "", ...props }: ComponentProps<"tbody">) {

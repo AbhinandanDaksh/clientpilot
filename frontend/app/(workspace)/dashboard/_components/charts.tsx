@@ -15,7 +15,7 @@ const outreach = [
   { week: "Week 5", leads: 46, replies: 18 },
   { week: "Week 6", leads: 58, replies: 24 },
 ];
-const tick = { fill: "var(--dash-muted)", fontSize: 10 };
+const tick = { fill: "var(--dash-muted)", fontSize: 12 };
 const tooltip = { backgroundColor: "var(--dash-card)", border: "1px solid var(--dash-border)", borderRadius: 12, color: "var(--dash-text)", fontSize: 12 };
 
 export function WeeklyActivityChart() {
@@ -38,8 +38,8 @@ export function OutreachTrendChart() {
   return (
     <section data-aos="fade-up" className="mt-7 min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
-        <div><h2>Outreach momentum</h2><p className="mt-1 text-xs text-dash-muted">Leads and replies over six weeks</p></div>
-        <div className="flex gap-4 text-xs text-dash-muted">
+        <div><h2>Outreach momentum</h2><p className="mt-1 text-sm text-dash-muted">Leads and replies over six weeks</p></div>
+        <div className="flex gap-4 text-sm text-dash-muted">
           <span className="flex items-center gap-2"><i className="size-2 rounded-full bg-dash-primary" />Leads</span>
           <span className="flex items-center gap-2"><i className="size-2 rounded-full bg-dash-green" />Replies</span>
         </div>
@@ -79,7 +79,7 @@ export function PipelineCharts() {
     <div className="mt-7 grid min-w-0 grid-cols-2 gap-4 max-[850px]:grid-cols-1">
       <section data-aos="fade-up" className="min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
         <h2>Where leads come from</h2>
-        <p className="mt-1 text-xs text-dash-muted">Lead source breakdown</p>
+        <p className="mt-1 text-sm text-dash-muted">Lead source breakdown</p>
         <div className="relative mx-auto h-[230px] w-full max-w-[320px]" role="group" aria-label="lead sources: Website 42 percent, Referrals 28 percent, Social 18 percent, Outreach 12 percent.">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <PieChart accessibilityLayer>
@@ -89,10 +89,10 @@ export function PipelineCharts() {
           </ResponsiveContainer>
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <strong className="text-2xl font-semibold text-dash-text">100%</strong>
-            <span className="text-xs text-dash-muted">All sources</span>
+            <span className="text-sm text-dash-muted">All sources</span>
           </div>
         </div>
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
           {sources.map((source) => (
             <li key={source.name} className="flex items-center gap-2">
               <span aria-hidden="true" className="size-2 shrink-0 rounded-full" style={{ backgroundColor: source.fill }} />
@@ -104,7 +104,7 @@ export function PipelineCharts() {
       </section>
       <section data-aos="fade-up" className="min-w-0 rounded-[18px] border border-dash-border bg-dash-card p-6 max-[560px]:p-[18px]">
         <h2>Your deal pipeline</h2>
-        <p className="mt-1 text-xs text-dash-muted">Opportunities by stage</p>
+        <p className="mt-1 text-sm text-dash-muted">Opportunities by stage</p>
         <div className="mt-6 h-[265px] w-full min-w-0" role="group" aria-label="pipeline: 48 new leads, 32 contacted, 19 in discussion, 11 proposals sent, 6 won.">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <BarChart data={pipeline} layout="vertical" margin={{ top: 4, right: 16, bottom: 0, left: 0 }} accessibilityLayer>

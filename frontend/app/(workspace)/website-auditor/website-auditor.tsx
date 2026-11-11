@@ -1,5 +1,7 @@
 ﻿"use client";
 
+import Feedback from "@/components/ui/feedback";
+
 import { useRef, useState, type FormEvent } from "react";
 import { LuArrowUpRight, LuDownload, LuEllipsis, LuFileSearch, LuGlobe, LuTrendingUp, LuX } from "react-icons/lu";
 import Button from "@/components/ui/button";
@@ -70,9 +72,9 @@ export default function WebsiteAuditor() {
   return <div className="space-y-6">
     <header className="flex flex-wrap items-end justify-between gap-4 pt-3">
       <div>
-        <p className="mb-3 text-[10px] font-medium tracking-[1.8px] text-dash-muted">WEBSITE INTELLIGENCE</p>
+        <p className="mb-3 text-[12px] font-medium tracking-[1.8px] text-dash-muted">WEBSITE INTELLIGENCE</p>
         <h1 className="text-[32px] font-semibold tracking-[-1px]">Website Auditor</h1>
-        <p className="mt-3 text-xs leading-6 text-dash-muted">Turn website observations into clear, valuable recommendations.</p>
+        <p className="mt-3 text-sm leading-6 text-dash-muted">Turn website observations into clear, valuable recommendations.</p>
       </div>
       <div className="flex items-center gap-2">
         <Button type="submit" form="website-audit"><LuFileSearch size={15} aria-hidden="true" />Run Audit</Button>
@@ -94,37 +96,37 @@ export default function WebsiteAuditor() {
       {metrics.map(metric => <article key={metric.label} className={panel}>
         <div className="flex items-center gap-3">
           <span className={`grid size-9 place-items-center rounded-xl ${metric.tone}`}><LuTrendingUp size={18} aria-hidden="true" /></span>
-          <h2 className="!text-xs !font-medium !tracking-normal">{metric.label}</h2>
+          <h2 className="!text-sm !font-medium !tracking-normal">{metric.label}</h2>
           <button type="button" aria-label={`${metric.label} score information`} aria-expanded={metricOpen === metric.label} className="ml-auto grid size-7 place-items-center rounded-lg text-dash-muted hover:bg-dash-sand" onClick={() => setMetricOpen(metricOpen === metric.label ? null : metric.label)}><LuEllipsis size={17} aria-hidden="true" /></button>
         </div>
-        <p className="mt-6 mb-4"><strong className="text-[36px] font-semibold leading-none tracking-[-1.5px]">{metric.score}</strong><span className="ml-1 text-[10px] text-dash-muted">/100</span></p>
+        <p className="mt-6 mb-4"><strong className="text-[36px] font-semibold leading-none tracking-[-1.5px]">{metric.score}</strong><span className="ml-1 text-[12px] text-dash-muted">/100</span></p>
         <div role="meter" aria-label={`${metric.label} simulated score`} aria-valuenow={metric.score} aria-valuemin={0} aria-valuemax={100} className="h-1.5 overflow-hidden rounded-full bg-dash-border"><div className={`h-full rounded-full ${metric.bar}`} style={{ width: `${metric.score}%` }} /></div>
         
-        {metricOpen === metric.label && <p className="mt-3 border-t border-dash-border pt-3 text-xs leading-6 text-dash-muted">{metric.detail}</p>}
+        {metricOpen === metric.label && <p className="mt-3 border-t border-dash-border pt-3 text-sm leading-6 text-dash-muted">{metric.detail}</p>}
       </article>)}
     </section>
 
-    {activeAudit && <p className="text-xs text-dash-muted">Showing simulated results for <span className="font-medium text-dash-text">{activeAudit.name}</span> · {activeAudit.url}</p>}
+    {activeAudit && <p className="text-sm text-dash-muted">Showing simulated results for <span className="font-medium text-dash-text">{activeAudit.name}</span> · {activeAudit.url}</p>}
 
     <div className="grid grid-cols-[1.2fr_1fr] gap-4 max-[850px]:grid-cols-1">
       <section className={`${panel} min-h-[295px]`} aria-labelledby="findings-title">
         <h2 id="findings-title" className="!text-base !tracking-tight">Priority findings</h2>
-        <p className="mt-2 text-[11px] text-dash-muted">observations from the audit.</p>
+        <p className="mt-2 text-[12px] text-dash-muted">observations from the audit.</p>
         <ol className="mt-2 divide-y divide-dash-border">
           {findings.map((finding, index) => <li key={finding.title} className="flex items-start gap-3 py-5 max-[560px]:flex-wrap">
-            <span className={`grid size-8 shrink-0 place-items-center rounded-[10px] text-[10px] ${finding.tone}`}>{String(index + 1).padStart(2, "0")}</span>
-            <div className="min-w-0 flex-1"><h3 className="text-xs font-medium leading-5">{finding.title}</h3><p className="mt-1 text-[10px] leading-5 text-dash-muted">UNVERIFIED · Needs manual confirmation before outreach</p></div>
-            <span className="mt-1 rounded-md bg-dash-bg px-2 py-1.5 text-[9px] text-dash-muted">UNVERIFIED</span>
+            <span className={`grid size-8 shrink-0 place-items-center rounded-[10px] text-[12px] ${finding.tone}`}>{String(index + 1).padStart(2, "0")}</span>
+            <div className="min-w-0 flex-1"><h3 className="text-sm font-medium leading-5">{finding.title}</h3><p className="mt-1 text-[12px] leading-5 text-dash-muted">UNVERIFIED · Needs manual confirmation before outreach</p></div>
+            <span className="mt-1 rounded-md bg-dash-bg px-2 py-1.5 text-[12px] text-dash-muted">UNVERIFIED</span>
           </li>)}
         </ol>
       </section>
       <section className={panel} aria-labelledby="recommendations-title">
         <h2 id="recommendations-title" className="!text-base !tracking-tight">Recommended improvements</h2>
-        <p className="mt-2 text-[11px] text-dash-muted">Ranked from easiest to hardest.</p>
+        <p className="mt-2 text-[12px] text-dash-muted">Ranked from easiest to hardest.</p>
         <ol className="mt-2 divide-y divide-dash-border">
           {recommendations.map((item, index) => <li key={item.title}><button onClick={() => { setRecommendation(item); dialog.current?.showModal(); }} className="flex w-full items-center gap-3 rounded-lg py-4 text-left hover:bg-dash-bg">
-            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-dash-bg text-[10px] text-dash-primary">{index + 1}</span>
-            <span className="flex-1"><span className="block text-xs font-medium leading-5">{item.title}</span><span className="mt-1 block text-[10px] text-dash-muted">{item.effort}</span></span>
+            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-dash-bg text-[12px] text-dash-primary">{index + 1}</span>
+            <span className="flex-1"><span className="block text-sm font-medium leading-5">{item.title}</span><span className="mt-1 block text-[12px] text-dash-muted">{item.effort}</span></span>
             <LuArrowUpRight size={15} className="text-dash-primary" aria-hidden="true" />
           </button></li>)}
         </ol>
@@ -132,21 +134,21 @@ export default function WebsiteAuditor() {
     </div>
 
     <section className={panel} aria-labelledby="history-title">
-      <div className="mb-5 flex items-center justify-between gap-3"><div><h2 id="history-title" className="!text-base !tracking-tight">Audit history</h2><p className="mt-2 text-[11px] text-dash-muted">Recent audits for your leads.</p></div><Button variant="secondary" onClick={exportHistory}><LuDownload size={15} aria-hidden="true" />Export</Button></div>
+      <div className="mb-5 flex items-center justify-between gap-3"><div><h2 id="history-title" className="!text-base !tracking-tight">Audit history</h2><p className="mt-2 text-[12px] text-dash-muted">Recent audits for your leads.</p></div><Button variant="secondary" onClick={exportHistory}><LuDownload size={15} aria-hidden="true" />Export</Button></div>
       <Table aria-label="audit history" className="min-w-[700px]">
         <TableHeader><TableRow><TableHead>BUSINESS</TableHead><TableHead>RUN</TableHead><TableHead>SCORES</TableHead><TableHead>STATUS</TableHead></TableRow></TableHeader>
         <TableBody>{history.map(audit => <TableRow key={audit.id}>
-          <TableCell><button className="text-left font-semibold hover:text-dash-primary" onClick={() => { setActiveAudit(audit); setNotice(`Viewing ${audit.name}. These are fixed scores and unverified findings.`); }}>{audit.name}</button><p className="mt-1 max-w-64 truncate text-[10px] text-dash-muted" title={audit.url}>{audit.url}</p></TableCell>
-          <TableCell><p>{audit.time}</p><p className="mt-1 text-[10px] text-dash-muted">4 categories checked · Simulated</p></TableCell>
-          <TableCell><div className="flex flex-wrap gap-1.5">{metrics.slice(0, 3).map(metric => <span key={metric.label} className="rounded-md bg-dash-bg px-2 py-1.5 text-[9px] text-dash-muted">{metric.score} {metric.label}</span>)}</div></TableCell>
-          <TableCell><span className="rounded-md bg-dash-sage px-2.5 py-1.5 text-[10px] text-dash-green">Complete · preview</span></TableCell>
+          <TableCell><button className="text-left font-semibold hover:text-dash-primary" onClick={() => { setActiveAudit(audit); setNotice(`Viewing ${audit.name}. These are fixed scores and unverified findings.`); }}>{audit.name}</button><p className="mt-1 max-w-64 truncate text-[12px] text-dash-muted" title={audit.url}>{audit.url}</p></TableCell>
+          <TableCell><p>{audit.time}</p><p className="mt-1 text-[12px] text-dash-muted">4 categories checked · Simulated</p></TableCell>
+          <TableCell><div className="flex flex-wrap gap-1.5">{metrics.slice(0, 3).map(metric => <span key={metric.label} className="rounded-md bg-dash-bg px-2 py-1.5 text-[12px] text-dash-muted">{metric.score} {metric.label}</span>)}</div></TableCell>
+          <TableCell><span className="rounded-md bg-dash-sage px-2.5 py-1.5 text-[12px] text-dash-green">Complete · preview</span></TableCell>
         </TableRow>)}</TableBody>
       </Table>
     </section>
-    <p role="status" className="break-words text-xs leading-6 text-dash-muted">{notice}</p>
+    <Feedback message={notice} onDismiss={() => setNotice("")} />
     <dialog ref={dialog} aria-labelledby="improvement-title" className="m-auto w-[min(460px,90vw)] rounded-[18px] border border-dash-border bg-dash-card p-6 text-dash-text backdrop:bg-black/30">
       <div className="flex items-start justify-between gap-4"><h2 id="improvement-title" className="!text-lg">{recommendation?.title}</h2><button aria-label="Close improvement" onClick={() => dialog.current?.close()} className="grid size-7 shrink-0 place-items-center rounded-lg hover:bg-dash-sand"><LuX size={18} aria-hidden="true" /></button></div>
-      <p className="mt-3 text-[10px] text-dash-primary">{recommendation?.effort}</p><p className="mt-4 text-xs leading-7 text-dash-muted">{recommendation?.detail}</p><Button className="mt-5" onClick={() => dialog.current?.close()}>Got it</Button>
+      <p className="mt-3 text-[12px] text-dash-primary">{recommendation?.effort}</p><p className="mt-4 text-sm leading-7 text-dash-muted">{recommendation?.detail}</p><Button className="mt-5" onClick={() => dialog.current?.close()}>Got it</Button>
     </dialog>
   </div>;
 }

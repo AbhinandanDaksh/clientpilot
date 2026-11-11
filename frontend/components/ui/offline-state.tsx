@@ -22,13 +22,13 @@ export default function OfflineState() {
         <span className="mx-auto mb-6 grid size-16 place-items-center rounded-2xl bg-dash-peach text-dash-primary">
           <LuWifiOff aria-hidden="true" size={30} />
         </span>
-        <p className="mb-3 text-[10px] font-semibold tracking-[2px] text-dash-primary">CONNECTION LOST</p>
+        <p className="mb-3 text-[12px] font-semibold tracking-[2px] text-dash-primary">CONNECTION LOST</p>
         <h1 id="offline-heading" className="text-3xl font-semibold tracking-tight">No internet connection</h1>
         <p className="mt-4 text-sm leading-7 text-dash-muted">Looks like you&apos;re offline. Check your Wi-Fi or mobile data. Your workspace will be here when you reconnect.</p>
         <button type="button" onClick={retry} className="mt-8 inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-dash-primary px-5 py-3 text-sm font-semibold text-dash-white transition-colors hover:bg-dash-primary-hover focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-dash-primary">
           <LuRefreshCw aria-hidden="true" size={16} />Try again
         </button>
-        <p role="status" className="mt-5 min-h-10 text-xs leading-5 text-dash-muted">{message || "We'll reconnect automatically when your connection returns."}</p>
+        <p role="status" className="mt-5 min-h-10 text-sm leading-5 text-dash-muted">{message || "We'll reconnect automatically when your connection returns."}</p>
       </section>
     </main>
   );

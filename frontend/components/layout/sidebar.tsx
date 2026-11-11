@@ -95,7 +95,7 @@ export default function Sidebar({
       <nav aria-label="Workspace navigation" className="mt-5 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain pr-1 [scrollbar-width:thin] [scrollbar-color:var(--dash-border)_transparent]">
         {navigation.map(({ heading, items }) => (
           <div className="mb-5 last:mb-0 [&>p]:mb-2 [&>p]:pl-3" key={heading}>
-            <p className="mb-2.5 text-[10px] font-semibold tracking-[1.5px] text-dash-muted group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
+            <p className="mb-2.5 text-[12px] font-semibold tracking-[1.5px] text-dash-muted group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
               {heading}
             </p>
             {items.map(({ icon: ItemIcon, label, badge }) => (
@@ -103,7 +103,7 @@ export default function Sidebar({
                 key={label}
                 href={workspaceHref(label)}
                 title={label}
-                className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-xs leading-5 whitespace-nowrap transition-[background-color,color,padding,gap] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none hover:bg-dash-card group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
+                className={`my-1 flex min-h-10 w-full items-center gap-2.5 rounded-xl border-0 px-3 py-2.5 text-left text-sm leading-5 whitespace-nowrap transition-[background-color,color,padding,gap] duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none hover:bg-dash-card group-data-[collapsed=true]:p-3 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:p-3 ${active === label ? "bg-dash-card font-semibold text-dash-primary shadow-[0_4px_15px_var(--dash-shadow)]" : "bg-transparent text-dash-muted"}`}
                 aria-current={active === label ? "page" : undefined}
                 onClick={onNavigate}
               >
@@ -112,7 +112,7 @@ export default function Sidebar({
                   {label}
                 </span>
                 {badge && (
-                  <span className="ml-auto rounded-[20px] bg-dash-peach px-1.5 py-px text-[10px] text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
+                  <span className="ml-auto rounded-[20px] bg-dash-peach px-1.5 py-px text-[12px] text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
                     {badge}
                   </span>
                 )}
@@ -122,7 +122,7 @@ export default function Sidebar({
         ))}
       </nav>
       <div className="shrink-0 border-t border-dash-border pt-3 mt-3">
-        <div className="rounded-[17px] border border-dash-border bg-dash-bg p-4 [@media(max-height:760px)]:hidden [&_h3]:mb-[3px] [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mb-3 [&_p]:text-xs [&_p]:text-dash-muted [&_button]:inline-flex [&_button]:items-center [&_button]:gap-[5px] [&_button]:text-sm [&_button]:text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
+        <div className="rounded-[17px] border border-dash-border bg-dash-bg p-4 [@media(max-height:760px)]:hidden [&_h3]:mb-[3px] [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mb-3 [&_p]:text-sm [&_p]:text-dash-muted [&_button]:inline-flex [&_button]:items-center [&_button]:gap-[5px] [&_button]:text-sm [&_button]:text-dash-primary group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
           <span className="mb-3 grid size-8 place-items-center rounded-full bg-dash-peach text-dash-primary">
             <LuSparkles aria-hidden="true" size={18} />
           </span>
@@ -133,11 +133,11 @@ export default function Sidebar({
           </button>
         </div>
         <button
-          className="flex w-full items-center gap-3 border-0 bg-transparent px-2 pt-3 pb-1 text-left group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:px-0 [&_strong]:block [&_strong]:text-xs [&_small]:block [&_small]:text-[10px] [&_small]:text-dash-muted"
+          className="flex w-full items-center gap-3 border-0 bg-transparent px-2 pt-3 pb-1 text-left group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 group-data-[mobile=false]:max-[850px]:justify-center group-data-[mobile=false]:max-[850px]:px-0 [&_strong]:block [&_strong]:text-sm [&_small]:block [&_small]:text-[12px] [&_small]:text-dash-muted"
           title="Account settings"
           onClick={() => onSelect("Settings")}
         >
-          <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[11px] font-bold text-dash-avatar-text">
+          <span className="inline-grid size-[30px] shrink-0 place-items-center rounded-full bg-dash-avatar text-[12px] font-bold text-dash-avatar-text">
             AK
           </span>
           <span className="group-data-[collapsed=true]:hidden group-data-[mobile=false]:max-[850px]:hidden">
