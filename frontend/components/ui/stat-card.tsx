@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
-export default function StatCard({ label, value, detail, icon, tone = "bg-dash-peach text-dash-primary" }: { label: string; value: ReactNode; detail: string; icon: ReactNode; tone?: string }) {
+export default function StatCard({ label, value, detail, icon, tone = "bg-dash-peach text-dash-primary", compact = false }: { label: string; value: ReactNode; detail: string; icon: ReactNode; tone?: string; compact?: boolean }) {
+  if (compact) return <article className="min-w-0 rounded-xl border border-dash-border bg-dash-card p-3 @min-[700px]:p-4"><div className="flex flex-wrap items-center justify-between gap-2"><p className="text-xs font-medium text-dash-muted">{label}</p><span className={`grid size-7 shrink-0 place-items-center rounded-lg ${tone}`} aria-hidden="true">{icon}</span></div><p className="mt-2 text-2xl font-semibold tracking-tight">{value}</p><p className="mt-1 text-xs leading-5 text-dash-muted">{detail}</p></article>;
   return <article className="rounded-[18px] border border-dash-border bg-dash-card p-5"><div className="flex items-center justify-between gap-3"><p className="text-sm text-dash-muted">{label}</p><span className={`grid size-9 shrink-0 place-items-center rounded-xl ${tone}`} aria-hidden="true">{icon}</span></div><p className="mt-4 text-[30px] font-semibold tracking-tight">{value}</p><p className="mt-2 text-[12px] leading-5 text-dash-muted">{detail}</p></article>;
 }
