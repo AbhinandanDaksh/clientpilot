@@ -92,14 +92,14 @@ export default function WebsiteAuditor() {
       
     </form>
 
-    <section aria-label="Simulated audit scores" className="grid min-w-0 grid-cols-1 gap-4 @min-[600px]:grid-cols-2 @min-[1100px]:grid-cols-4">
-      {metrics.map(metric => <article key={metric.label} className={panel}>
-        <div className="grid min-w-0 grid-cols-[36px_minmax(0,1fr)_44px] items-center gap-2">
-          <span className={`grid size-9 place-items-center rounded-xl ${metric.tone}`}><LuTrendingUp size={18} aria-hidden="true" /></span>
-          <h2 className="min-w-0 break-words !text-sm !font-medium !tracking-normal">{metric.label}</h2>
-          <button type="button" aria-label={`${metric.label} score information`} aria-expanded={metricOpen === metric.label} className="ml-auto grid size-7 place-items-center rounded-lg text-dash-muted hover:bg-dash-sand" onClick={() => setMetricOpen(metricOpen === metric.label ? null : metric.label)}><LuEllipsis size={17} aria-hidden="true" /></button>
+    <section aria-label="Simulated audit scores" className="grid min-w-0 grid-cols-2 gap-3 @min-[1100px]:grid-cols-4">
+      {metrics.map(metric => <article key={metric.label} className="min-w-0 rounded-2xl border border-dash-border bg-dash-card p-3 @min-[700px]:p-5">
+        <div className="relative min-w-0">
+          <span className={`mb-3 grid size-8 place-items-center rounded-lg ${metric.tone}`}><LuTrendingUp size={18} aria-hidden="true" /></span>
+          <h2 className="min-w-0 min-h-10 break-words !text-xs !font-medium !leading-5 !tracking-normal @min-[700px]:!text-sm">{metric.label}</h2>
+          <button type="button" aria-label={`${metric.label} score information`} aria-expanded={metricOpen === metric.label} className="absolute top-0 right-0 grid size-11 place-items-center rounded-lg text-dash-muted hover:bg-dash-sand" onClick={() => setMetricOpen(metricOpen === metric.label ? null : metric.label)}><LuEllipsis size={17} aria-hidden="true" /></button>
         </div>
-        <p className="mt-6 mb-4"><strong className="text-[36px] font-semibold leading-none tracking-[-1.5px]">{metric.score}</strong><span className="ml-1 text-[12px] text-dash-muted">/100</span></p>
+        <p className="mt-2 mb-3"><strong className="text-[30px] font-semibold leading-none tracking-[-1.5px]">{metric.score}</strong><span className="ml-1 text-[12px] text-dash-muted">/100</span></p>
         <div role="meter" aria-label={`${metric.label} simulated score`} aria-valuenow={metric.score} aria-valuemin={0} aria-valuemax={100} className="h-1.5 overflow-hidden rounded-full bg-dash-border"><div className={`h-full rounded-full ${metric.bar}`} style={{ width: `${metric.score}%` }} /></div>
         
         {metricOpen === metric.label && <p className="mt-3 border-t border-dash-border pt-3 text-sm leading-6 text-dash-muted">{metric.detail}</p>}

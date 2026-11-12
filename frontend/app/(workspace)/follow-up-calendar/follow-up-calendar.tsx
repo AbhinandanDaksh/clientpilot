@@ -52,12 +52,12 @@ export default function FollowUpCalendar({ today }: { today: string }) {
     setSelected(date); setMonth(fromKey(date)); setView("All follow-ups"); dialog.current?.close(); event.currentTarget.reset(); setNotice("Follow-up saved locally. No external reminder has been scheduled.");
   }
 
-  return <div className="space-y-6">
+  return <div className="@container min-w-0 space-y-6">
     <ScreenHeader eyebrow="A LITTLE FOLLOW-THROUGH" title="Follow-up Calendar" description="Make space for the conversations that deserve another thoughtful touch." actions={<Button onClick={() => dialog.current?.showModal()}><LuPlus size={15} />Add follow-up</Button>} />
-    <section aria-label="Follow-up summary" className="grid grid-cols-3 gap-4 max-[700px]:grid-cols-1">
-      <StatCard label="Due today" value={tasks.filter(task => task.date === today && !task.done).length} detail="Pending follow-ups for today · IST" icon={<LuCalendarDays size={18} />} />
-      <StatCard label="Upcoming" value={tasks.filter(task => task.date > today && !task.done).length} detail="Next steps on your local calendar" icon={<LuClock size={18} />} tone="bg-dash-lavender text-dash-purple" />
-      <StatCard label="Completed" value={tasks.filter(task => task.done).length} detail="Small actions, meaningful momentum" icon={<LuCheck size={18} />} tone="bg-dash-sage text-dash-green" />
+    <section aria-label="Follow-up summary" className="grid min-w-0 grid-cols-2 gap-3 @min-[700px]:grid-cols-3">
+      <StatCard compact label="Due today" value={tasks.filter(task => task.date === today && !task.done).length} detail="Pending follow-ups for today · IST" icon={<LuCalendarDays size={18} />} />
+      <StatCard compact label="Upcoming" value={tasks.filter(task => task.date > today && !task.done).length} detail="Next steps on your local calendar" icon={<LuClock size={18} />} tone="bg-dash-lavender text-dash-purple" />
+      <StatCard compact label="Completed" value={tasks.filter(task => task.done).length} detail="Small actions, meaningful momentum" icon={<LuCheck size={18} />} tone="bg-dash-sage text-dash-green" />
     </section>
     <div className="grid grid-cols-[minmax(0,1.5fr)_minmax(270px,1fr)] items-start gap-4 max-[1000px]:grid-cols-1">
       <section className={`${panel} max-[560px]:p-3`} aria-label="Monthly follow-up calendar">

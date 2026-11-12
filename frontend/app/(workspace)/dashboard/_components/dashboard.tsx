@@ -13,7 +13,7 @@ const PipelineCharts = dynamic(() => import("./charts").then((module) => module.
 export default function Dashboard() {
   const { setActive, setNotice, run, ran } = useWorkspace();
   return (
-            <>
+            <div className="@container min-w-0">
               <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
                 <div className="relative z-1">
                   <p className="mb-[18px] flex items-center gap-2.5 text-[12px] font-semibold tracking-[1px] text-dash-primary max-[560px]:text-[12px]">
@@ -67,12 +67,12 @@ export default function Dashboard() {
                 </div>
               </section>
               <section data-aos="fade-up"
-                className="my-7 grid grid-cols-6 gap-3 max-[1250px]:grid-cols-3 max-[560px]:mt-[18px] max-[560px]:mb-6 max-[560px]:grid-cols-2 max-[560px]:gap-2"
+                className="my-7 grid min-w-0 grid-cols-2 gap-3 @min-[640px]:grid-cols-3 @min-[1200px]:grid-cols-6 max-[560px]:mt-[18px] max-[560px]:mb-6 max-[560px]:gap-2"
                 aria-label="Business overview"
               >
                 {metrics.map((metric) => (
                   <article
-                    className="min-h-[146px] rounded-[18px] border border-dash-border bg-dash-card p-[15px] [&_p]:mt-5 [&_p]:mb-[3px] [&_p]:text-[12px] [&_p]:whitespace-nowrap [&_p]:text-dash-muted [&>div]:flex [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-1 [&_strong]:text-[27px] [&_strong]:font-semibold [&_strong]:tracking-[-1px] [&_small]:text-[12px] [&_small]:whitespace-nowrap [&_small]:text-dash-green max-[1250px]:[&_p]:mt-[15px] max-[560px]:p-[13px] max-[560px]:[&_p]:min-h-7 max-[560px]:[&_p]:text-[12px] max-[560px]:[&_p]:whitespace-normal"
+                    className="min-w-0 min-h-[146px] rounded-[18px] border border-dash-border bg-dash-card p-[15px] [&_p]:mt-5 [&_p]:mb-[3px] [&_p]:text-[12px] [&_p]:break-words [&_p]:text-dash-muted [&>div]:flex [&>div]:flex-wrap [&>div]:items-baseline [&>div]:justify-between [&>div]:gap-1 [&_strong]:break-words [&_strong]:text-[27px] [&_strong]:font-semibold [&_strong]:tracking-[-1px] [&_small]:text-[12px] [&_small]:break-words [&_small]:text-dash-green max-[1250px]:[&_p]:mt-[15px] max-[560px]:p-[13px] max-[560px]:[&_p]:min-h-7 max-[560px]:[&_p]:text-[12px] max-[560px]:[&_p]:whitespace-normal"
                     key={metric.label}
                   >
                     <span
@@ -213,6 +213,6 @@ export default function Dashboard() {
                   <p className="mt-2 text-[12px] text-dash-muted">Weekly actions</p>
                 </section>
               </div>
-            </>
+            </div>
   );
 }
