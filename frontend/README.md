@@ -29,7 +29,9 @@ utils/                   Reserved for shared utilities when needed
 public/                  Static assets
 ```
 
-Import icons directly from `react-icons/lu`. Use Tailwind utilities for styling and keep colors in `common/colors.css`. Dashboard data and agent actions currently use local demo state. Authentication pages are scaffolds.
+Import icons directly from `react-icons/lu`. Use Tailwind utilities for styling and keep colors in `common/colors.css`. Lead Hunter uses the MongoDB-backed backend for CRUD and free OpenStreetMap discovery. Dashboard lead counts and fresh leads are real API data; other charts and agent actions still use demo state. Authentication pages are scaffolds.
+
+Start `backend` on port 4000 with MongoDB configured, then run this frontend. `/api/leads` is proxied to `http://127.0.0.1:4000` by default. Set `BACKEND_URL` in `.env.local` before starting/building if the backend uses another address. No Google Places key or paid service is required. Daily discovery runs at 09:00 IST only while the backend is running; OpenStreetMap coverage and availability vary.
 
 ## Checks
 

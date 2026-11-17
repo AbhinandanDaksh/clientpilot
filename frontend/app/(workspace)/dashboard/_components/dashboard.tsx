@@ -1,10 +1,11 @@
 "use client";
 import { LuSparkles, LuCompass, LuPencilLine, LuMessageCircle, LuPlay, LuArrowUpRight, LuEllipsis } from "react-icons/lu";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import Button from "@/components/ui/button";
 import { useWorkspace } from "@/components/layout/workspace-shell";
 import { ChartSkeleton } from "./loading-skeleton";
-import { metrics, agents, leads } from "./data";
+import { metrics, agents } from "./data";
 const WeeklyActivityChart = dynamic(() => import("./charts").then((module) => module.WeeklyActivityChart), { ssr: false, loading: () => <ChartSkeleton variant="weekly" /> });
 const OutreachTrendChart = dynamic(() => import("./charts").then((module) => module.OutreachTrendChart), { ssr: false, loading: () => <ChartSkeleton /> });
 
@@ -12,6 +13,19 @@ const PipelineCharts = dynamic(() => import("./charts").then((module) => module.
 
 export default function Dashboard() {
   const { setActive, setNotice, run, ran } = useWorkspace();
+  const [leads, setLeads] = useState<{ _id: string; name: string; category: string; location: string; status: string }[]>([]);
+  const [leadError, setLeadError] = useState("");
+  const [counts, setCounts] = useState<{ total: number; qualified: number } | null>(null);
+  useEffect(() => {
+    let active = true;
+    void Promise.all([fetch("/api/leads?limit=5", { cache: "no-store" }), fetch("/api/leads?status=Qualified&limit=1", { cache: "no-store" })])
+      .then(async responses => {
+        if (responses.some(response => !response.ok)) throw new Error("Could not load saved leads. Open Lead Hunter to retry.");
+        const [all, qualified] = await Promise.all(responses.map(response => response.json()));
+        if (active) { setLeads(all.data); setCounts({ total: all.total, qualified: qualified.total }); }
+      }).catch(error => { if (active) setLeadError(error.message); });
+    return () => { active = false; };
+  }, []);
   return (
             <div className="@container min-w-0">
               <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
@@ -30,7 +44,7 @@ export default function Dashboard() {
                     freelance business.
                   </p>
                   <div className="flex flex-wrap gap-3 max-[560px]:gap-2">
-                    <Button onClick={() => run("Lead Hunter")}>
+                    <Button onClick={() => setActive("Lead Hunter")}>
                       <LuPlay aria-hidden="true" size={15} />
                       Run Lead Hunter
                     </Button>
@@ -82,8 +96,8 @@ export default function Dashboard() {
                     </span>
                     <p>{metric.label}</p>
                     <div>
-                      <strong>{metric.value}</strong>
-                      <small>{metric.change}</small>
+                      <strong>{metric.label === "Leads discovered" ? counts?.total ?? "—" : metric.label === "Qualified leads" ? counts?.qualified ?? "—" : metric.value}</strong>
+                      <small>{["Leads discovered", "Qualified leads"].includes(metric.label) ? "Saved in MongoDB" : metric.change}</small>
                     </div>
                   </article>
                 ))}
@@ -170,27 +184,29 @@ export default function Dashboard() {
                       View all <LuArrowUpRight aria-hidden="true" size={14} />
                     </button>
                   </div>
+                  {leadError && <p role="alert" className="text-sm text-dash-muted">{leadError}</p>}
+                  {!leadError && !leads.length && <p className="text-sm text-dash-muted">No saved leads yet. Open Lead Hunter to add or discover businesses.</p>}
                   {leads.map((lead) => (
                     <div
                       className="flex items-center gap-3.5 border-b border-dash-border py-[17px] last:border-b-0 [&_h3]:m-0 [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mt-[3px] [&_p]:text-[12px] [&_p]:text-dash-muted max-[560px]:gap-2"
-                      key={lead.name}
+                      key={lead._id}
                     >
                       <span className="grid size-[34px] shrink-0 place-items-center rounded-[11px] bg-dash-sage text-[12px] font-semibold text-dash-green">
-                        {lead.initials}
+                        {lead.name.slice(0, 2).toUpperCase()}
                       </span>
                       <div>
                         <h3>{lead.name}</h3>
-                        <p>{lead.type}</p>
+                        <p>{lead.category} · {lead.location}</p>
                       </div>
                       <span className="ml-auto rounded-md bg-dash-sage px-2 py-1 text-[12px] text-dash-green max-[560px]:px-1 max-[560px]:text-[12px]">
-                        {lead.score} match
+                        {lead.status}
                       </span>
                       <button
                         className="inline-flex size-7 items-center justify-center rounded-lg border-0 bg-transparent text-dash-muted hover:bg-dash-sand"
                         aria-label={`View ${lead.name}`}
                         onClick={() =>
                           setNotice(
-                            `${lead.name} · ${lead.type} · ${lead.score}% match. This is a lead.`,
+                            `${lead.name} · ${lead.category} · ${lead.location}. Review in Lead Hunter.`,
                           )
                         }
                       >
@@ -198,6 +214,7 @@ export default function Dashboard() {
                       </button>
                     </div>
                   ))}
+                  <p className="mt-3 text-xs text-dash-muted">Business data may include © <a href="https://www.openstreetmap.org/copyright" className="underline">OpenStreetMap contributors</a> (ODbL).</p>
                 </section>
                 <section data-aos="fade-up" className="rounded-[18px] border border-dash-border bg-dash-card p-[25px] max-[560px]:p-[18px]">
                   <p className="mb-2.5 text-[12px] font-semibold tracking-[1.5px] text-dash-muted">

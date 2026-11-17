@@ -5,6 +5,7 @@ import { rateLimit } from "express-rate-limit";
 import { env } from "./config/env.js";
 import { getDatabase } from "./config/database.js";
 import { errorHandler } from "./middleware/error-handler.js";
+import { leadsRouter } from "./modules/leads/leads.routes.js";
 
 export const app = express();
 app.disable("x-powered-by");
@@ -27,5 +28,7 @@ app.get("/api/v1/health/ready", async (_req, res) => {
   }
 });
 
+app.use("/api/leads", leadsRouter);
+app.use("/api/v1/leads", leadsRouter);
 app.use((_req, res) => { res.status(404).json({ error: { message: "Route not found" } }); });
 app.use(errorHandler);
