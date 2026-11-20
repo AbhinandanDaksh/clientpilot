@@ -1,7 +1,7 @@
 "use client";
 import { LuSparkles, LuCompass, LuPencilLine, LuMessageCircle, LuPlay, LuArrowUpRight, LuEllipsis } from "react-icons/lu";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useGetLeadsQuery } from "@/store/leads-api";
 import Button from "@/components/ui/button";
 import { useWorkspace } from "@/components/layout/workspace-shell";
 import { ChartSkeleton } from "./loading-skeleton";
@@ -13,19 +13,13 @@ const PipelineCharts = dynamic(() => import("./charts").then((module) => module.
 
 export default function Dashboard() {
   const { setActive, setNotice, run, ran } = useWorkspace();
-  const [leads, setLeads] = useState<{ _id: string; name: string; category: string; location: string; status: string }[]>([]);
-  const [leadError, setLeadError] = useState("");
-  const [counts, setCounts] = useState<{ total: number; qualified: number } | null>(null);
-  useEffect(() => {
-    let active = true;
-    void Promise.all([fetch("/api/leads?limit=5", { cache: "no-store" }), fetch("/api/leads?status=Qualified&limit=1", { cache: "no-store" })])
-      .then(async responses => {
-        if (responses.some(response => !response.ok)) throw new Error("Could not load saved leads. Open Lead Hunter to retry.");
-        const [all, qualified] = await Promise.all(responses.map(response => response.json()));
-        if (active) { setLeads(all.data); setCounts({ total: all.total, qualified: qualified.total }); }
-      }).catch(error => { if (active) setLeadError(error.message); });
-    return () => { active = false; };
-  }, []);
+  const allLeads = useGetLeadsQuery({ limit: 5 });
+  const qualifiedLeads = useGetLeadsQuery({ status: "Qualified", limit: 1 });
+  const leads = allLeads.data?.data ?? [];
+  const leadError = allLeads.isError || qualifiedLeads.isError
+    ? "Could not load saved leads. Open Lead Hunter to retry."
+    : "";
+  const counts = { total: allLeads.data?.total, qualified: qualifiedLeads.data?.total };
   return (
             <div className="@container min-w-0">
               <section data-aos="fade-up" className="relative flex min-h-[304px] items-center justify-between overflow-hidden rounded-[23px] border border-dash-peach bg-[linear-gradient(110deg,var(--dash-hero-start),var(--dash-hero-end))] px-[47px] pt-10 pb-[35px] [&_h1]:mb-[15px] [&_h1]:text-[44px] [&_h1]:leading-[1.08] [&_h1]:font-[650] [&_h1]:tracking-[-2px] [&_h1_span]:text-dash-primary max-[1250px]:p-8 max-[1250px]:[&_h1]:text-4xl max-[850px]:min-h-[290px] max-[850px]:[&_h1]:text-[32px] max-[560px]:rounded-[18px] max-[560px]:px-5 max-[560px]:py-[26px] max-[560px]:[&_h1]:text-[30px] max-[560px]:[&_h1]:tracking-[-1.4px]">
@@ -185,7 +179,7 @@ export default function Dashboard() {
                     </button>
                   </div>
                   {leadError && <p role="alert" className="text-sm text-dash-muted">{leadError}</p>}
-                  {!leadError && !leads.length && <p className="text-sm text-dash-muted">No saved leads yet. Open Lead Hunter to add or discover businesses.</p>}
+                  {!leadError && !allLeads.isLoading && !leads.length && <p className="text-sm text-dash-muted">No saved leads yet. Open Lead Hunter to add or discover businesses.</p>}
                   {leads.map((lead) => (
                     <div
                       className="flex items-center gap-3.5 border-b border-dash-border py-[17px] last:border-b-0 [&_h3]:m-0 [&_h3]:text-sm [&_h3]:font-semibold [&_p]:mt-[3px] [&_p]:text-[12px] [&_p]:text-dash-muted max-[560px]:gap-2"

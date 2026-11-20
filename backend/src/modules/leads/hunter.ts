@@ -8,6 +8,41 @@ export const HunterRun = model("HunterRun", new Schema({
 const Lock = model("HunterLock", new Schema({ _id: String, until: Date }, { bufferCommands: false }));
 const cities = { Modinagar: [28.83, 77.54, 28.94, 77.64], Ghaziabad: [28.61, 77.36, 28.74, 77.51] };
 type Element = { type: "node" | "way" | "relation"; id: number; tags: Record<string, string> };
+const overpassEndpoints = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+];
+
+async function fetchElements(query: string): Promise<Element[]> {
+  const failures: string[] = [];
+  for (const endpoint of overpassEndpoints) {
+    const host = new URL(endpoint).hostname;
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: new URLSearchParams({ data: query }),
+        headers: { "User-Agent": "ClientPilot-local-lead-hunter/0.1" },
+        signal: AbortSignal.timeout(35_000),
+      });
+      if (!response.ok) {
+        await response.body?.cancel().catch(() => {});
+        failures.push(`${host} HTTP ${response.status}`);
+        continue;
+      }
+      const payload = await response.json() as { elements?: Element[]; remark?: string } | null;
+      if (payload?.remark || !Array.isArray(payload?.elements)) {
+        failures.push(`${host} returned incomplete data`);
+        continue;
+      }
+      return payload.elements;
+    } catch (error) {
+      const reason = error instanceof Error ? error.name : "request failed";
+      failures.push(`${host} ${reason}`);
+    }
+  }
+  throw new Error(`OpenStreetMap discovery unavailable (${failures.join(", ")}); retry later.`);
+}
+
 export function candidate(element: Element, city: string) {
   const t = element.tags;
   if (!t?.name?.trim()) return null;
@@ -32,11 +67,8 @@ export async function runHunter(location = "Modinagar + Ghaziabad", limit = 20, 
       if (location !== "Modinagar + Ghaziabad" && location !== city) continue;
       const bbox = bounds.join(",");
       const query = `[out:json][timeout:25][maxsize:16777216];(nwr["name"]["shop"](${bbox});nwr["name"]["amenity"~"^(restaurant|cafe|clinic|dentist|hospital|pharmacy)$"](${bbox});nwr["name"]["tourism"~"^(hotel|guest_house)$"](${bbox}););out tags 200;`;
-      const response = await fetch("https://overpass-api.de/api/interpreter", { method: "POST", body: new URLSearchParams({ data: query }), headers: { "User-Agent": "ClientPilot-local-lead-hunter/0.1", "Content-Type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(45_000) });
-      if (!response.ok) throw new Error(`OpenStreetMap discovery unavailable (${response.status}); retry later.`);
-      const payload = await response.json() as { elements?: Element[]; remark?: string };
-      if (payload.remark || !Array.isArray(payload.elements)) throw new Error("Discovery returned incomplete data; retry later.");
-      for (const element of payload.elements) {
+      const elements = await fetchElements(query);
+      for (const element of elements) {
         if (run.saved >= limit) break;
         const lead = candidate(element, city);
         if (!lead) continue;
